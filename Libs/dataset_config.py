@@ -58,3 +58,11 @@ class DatasetManager(list):
     def load(cls, src: str):
         with open(src, "r") as f:
             return cls([DatasetConfig.load(config) for config in json.load(f)])
+
+
+def get_available_id():
+    i = 0
+    while True:
+        if not os.path.exists(f"dataset/{i}"):
+            return i
+        i += 1

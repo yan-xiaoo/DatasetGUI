@@ -213,6 +213,24 @@
    </item>
   </layout>
  </widget>
+ <tabstops>
+  <tabstop>datasetTypeBox</tabstop>
+  <tabstop>cocoName</tabstop>
+  <tabstop>cocoImageEdit</tabstop>
+  <tabstop>cocoImageButton</tabstop>
+  <tabstop>cocoLabelEdit</tabstop>
+  <tabstop>cocoLabelButton</tabstop>
+  <tabstop>yoloName</tabstop>
+  <tabstop>yoloImageEdit</tabstop>
+  <tabstop>yoloImageButton</tabstop>
+  <tabstop>yoloLabelEdit</tabstop>
+  <tabstop>yoloLabelButton</tabstop>
+  <tabstop>checkDatasetBox</tabstop>
+  <tabstop>cleanDatasetBox</tabstop>
+  <tabstop>copyDatasetBox</tabstop>
+  <tabstop>okButton</tabstop>
+  <tabstop>cancelButton</tabstop>
+ </tabstops>
  <resources/>
  <connections>
   <connection>

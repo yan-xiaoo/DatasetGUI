@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
 ################################################################################
-## Form generated from reading UI file 'add_dataset_dialogPnLPjq.ui'
+## Form generated from reading UI file 'add_dataset_dialogJQQcBU.ui'
 ##
 ## Created by: Qt User Interface Compiler version 5.15.2
 ##
@@ -173,6 +173,21 @@ class Ui_Dialog(object):
 
         self.verticalLayout.addWidget(self.frame)
 
+        QWidget.setTabOrder(self.datasetTypeBox, self.cocoName)
+        QWidget.setTabOrder(self.cocoName, self.cocoImageEdit)
+        QWidget.setTabOrder(self.cocoImageEdit, self.cocoImageButton)
+        QWidget.setTabOrder(self.cocoImageButton, self.cocoLabelEdit)
+        QWidget.setTabOrder(self.cocoLabelEdit, self.cocoLabelButton)
+        QWidget.setTabOrder(self.cocoLabelButton, self.yoloName)
+        QWidget.setTabOrder(self.yoloName, self.yoloImageEdit)
+        QWidget.setTabOrder(self.yoloImageEdit, self.yoloImageButton)
+        QWidget.setTabOrder(self.yoloImageButton, self.yoloLabelEdit)
+        QWidget.setTabOrder(self.yoloLabelEdit, self.yoloLabelButton)
+        QWidget.setTabOrder(self.yoloLabelButton, self.checkDatasetBox)
+        QWidget.setTabOrder(self.checkDatasetBox, self.cleanDatasetBox)
+        QWidget.setTabOrder(self.cleanDatasetBox, self.copyDatasetBox)
+        QWidget.setTabOrder(self.copyDatasetBox, self.okButton)
+        QWidget.setTabOrder(self.okButton, self.cancelButton)
 
         self.retranslateUi(Dialog)
         self.cancelButton.clicked.connect(Dialog.reject)
