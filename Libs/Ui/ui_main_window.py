@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
 ################################################################################
-## Form generated from reading UI file 'main_windowWvMiKr.ui'
+## Form generated from reading UI file 'main_windowhigqlD.ui'
 ##
 ## Created by: Qt User Interface Compiler version 5.15.2
 ##
@@ -22,6 +22,10 @@ class Ui_MainWindow(object):
         self.action_new_dataset.setObjectName(u"action_new_dataset")
         self.action_add_dataset = QAction(MainWindow)
         self.action_add_dataset.setObjectName(u"action_add_dataset")
+        self.action_delete_dataset = QAction(MainWindow)
+        self.action_delete_dataset.setObjectName(u"action_delete_dataset")
+        self.action_detail = QAction(MainWindow)
+        self.action_detail.setObjectName(u"action_detail")
         self.centralwidget = QWidget(MainWindow)
         self.centralwidget.setObjectName(u"centralwidget")
         self.verticalLayout = QVBoxLayout(self.centralwidget)
@@ -43,6 +47,7 @@ class Ui_MainWindow(object):
         __qtablewidgetitem2 = QTableWidgetItem()
         self.main_table.setHorizontalHeaderItem(2, __qtablewidgetitem2)
         self.main_table.setObjectName(u"main_table")
+        self.main_table.setContextMenuPolicy(Qt.CustomContextMenu)
         self.main_table.setEditTriggers(QAbstractItemView.NoEditTriggers)
         self.main_table.setAlternatingRowColors(True)
         self.main_table.setSelectionMode(QAbstractItemView.SingleSelection)
@@ -51,6 +56,7 @@ class Ui_MainWindow(object):
         self.main_table.horizontalHeader().setMinimumSectionSize(60)
         self.main_table.horizontalHeader().setDefaultSectionSize(150)
         self.main_table.horizontalHeader().setStretchLastSection(True)
+        self.main_table.verticalHeader().setVisible(False)
 
         self.verticalLayout_2.addWidget(self.main_table)
 
@@ -83,9 +89,20 @@ class Ui_MainWindow(object):
 #if QT_CONFIG(tooltip)
         self.action_new_dataset.setToolTip(QCoreApplication.translate("MainWindow", u"\u65b0\u5efa\u7a7a\u767d\u6570\u636e\u96c6", None))
 #endif // QT_CONFIG(tooltip)
+#if QT_CONFIG(shortcut)
+        self.action_new_dataset.setShortcut(QCoreApplication.translate("MainWindow", u"Ctrl+N", None))
+#endif // QT_CONFIG(shortcut)
         self.action_add_dataset.setText(QCoreApplication.translate("MainWindow", u"\u6dfb\u52a0\u6570\u636e\u96c6\u2026", None))
 #if QT_CONFIG(tooltip)
         self.action_add_dataset.setToolTip(QCoreApplication.translate("MainWindow", u"\u6dfb\u52a0\u4e00\u4e2a\u5df2\u5b58\u5728\u7684\u6570\u636e\u96c6", None))
+#endif // QT_CONFIG(tooltip)
+#if QT_CONFIG(shortcut)
+        self.action_add_dataset.setShortcut(QCoreApplication.translate("MainWindow", u"Ctrl+O", None))
+#endif // QT_CONFIG(shortcut)
+        self.action_delete_dataset.setText(QCoreApplication.translate("MainWindow", u"\u5220\u9664\u6570\u636e\u96c6\u2026", None))
+        self.action_detail.setText(QCoreApplication.translate("MainWindow", u"\u8be6\u60c5\u2026", None))
+#if QT_CONFIG(tooltip)
+        self.action_detail.setToolTip(QCoreApplication.translate("MainWindow", u"\u70b9\u51fb\u67e5\u770b\u8be6\u60c5", None))
 #endif // QT_CONFIG(tooltip)
         self.groupBox.setTitle(QCoreApplication.translate("MainWindow", u"\u6570\u636e\u96c6\u7ba1\u7406", None))
         ___qtablewidgetitem = self.main_table.horizontalHeaderItem(0)
