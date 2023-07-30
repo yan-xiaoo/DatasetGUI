@@ -1,9 +1,10 @@
 import os.path
 
 from PySide2.QtWidgets import QMainWindow, QTableWidgetItem, QMenu
-from PySide2.QtCore import QPoint
+from PySide2.QtCore import QPoint, Slot
 from ..Ui.ui_main_window import Ui_MainWindow
 from .. import dataset_config
+from .add_dataset_dialog import AddDatasetDialog
 
 
 class MainWindow(QMainWindow, Ui_MainWindow):
@@ -38,3 +39,8 @@ class MainWindow(QMainWindow, Ui_MainWindow):
 
     def contextMenu(self, pos: QPoint):
         self.context_menu.exec_(self.main_table.mapToGlobal(pos))
+
+    @Slot()
+    def on_action_add_dataset_triggered(self):
+        add_dataset = AddDatasetDialog(self)
+        add_dataset.exec_()
