@@ -6,37 +6,32 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>400</width>
-    <height>151</height>
+    <width>435</width>
+    <height>200</height>
    </rect>
   </property>
   <property name="windowTitle">
-   <string>删除确认</string>
+   <string>删除问题</string>
   </property>
   <layout class="QVBoxLayout" name="verticalLayout">
    <item>
-    <widget class="QLabel" name="textLabel">
+    <widget class="QLabel" name="label">
      <property name="font">
       <font>
-       <pointsize>17</pointsize>
+       <pointsize>20</pointsize>
       </font>
      </property>
      <property name="text">
-      <string>确认要删除名为…的数据集吗？</string>
+      <string>非工作目录下的数据集文件无法删除</string>
      </property>
     </widget>
    </item>
    <item>
-    <widget class="QLabel" name="detailLabel">
+    <widget class="QLabel" name="label_2">
      <property name="text">
-      <string>如果您不选择“清除数据集文件”，则数据集本身不会丢失</string>
-     </property>
-    </widget>
-   </item>
-   <item>
-    <widget class="QCheckBox" name="clearFileBox">
-     <property name="text">
-      <string>同时清除数据集文件</string>
+      <string>我们无法确定数据集中哪部分是真正的数据，哪部分是您的文件。
+直接删除的话，您的数据很可能被误删
+如果您迫切需要删除，请点击下方对应按钮进入文件夹并自行删除文件</string>
      </property>
     </widget>
    </item>
@@ -48,18 +43,32 @@
      <property name="frameShadow">
       <enum>QFrame::Raised</enum>
      </property>
-     <layout class="QHBoxLayout" name="horizontalLayout">
-      <item>
-       <widget class="QPushButton" name="okButton">
+     <layout class="QGridLayout" name="gridLayout">
+      <item row="0" column="0">
+       <widget class="QPushButton" name="whyButton">
         <property name="text">
-         <string>确认</string>
+         <string>为什么不能删除？</string>
         </property>
        </widget>
       </item>
-      <item>
+      <item row="0" column="3">
        <widget class="QPushButton" name="cancelButton">
         <property name="text">
-         <string>取消</string>
+         <string>确定</string>
+        </property>
+       </widget>
+      </item>
+      <item row="1" column="0">
+       <widget class="QPushButton" name="imageButton">
+        <property name="text">
+         <string>打开图片文件夹</string>
+        </property>
+       </widget>
+      </item>
+      <item row="1" column="3">
+       <widget class="QPushButton" name="labelButton">
+        <property name="text">
+         <string>打开标签文件夹</string>
         </property>
        </widget>
       </item>
@@ -72,17 +81,17 @@
  <connections>
   <connection>
    <sender>cancelButton</sender>
-   <signal>clicked(bool)</signal>
+   <signal>clicked()</signal>
    <receiver>Dialog</receiver>
    <slot>reject()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>290</x>
-     <y>117</y>
+     <x>317</x>
+     <y>132</y>
     </hint>
     <hint type="destinationlabel">
-     <x>199</x>
-     <y>75</y>
+     <x>217</x>
+     <y>99</y>
     </hint>
    </hints>
   </connection>

@@ -7,6 +7,7 @@ from ..work_functions import CopyDir
 from ..process_window import ProcessWindow
 from .. import dataset_config
 from ..Dataset import clean_coco
+from ..changelog import ChangeLog
 from PySide2.QtWidgets import QDialog, QFileDialog, QMessageBox
 from PySide2.QtCore import Slot
 
@@ -117,7 +118,7 @@ class AddDatasetDialog(QDialog, Ui_Dialog):
             pass
         else:
             warn = CommonDialog(self, "警告", "删除该数据集时存在安全隐患",
-                                "如果您不复制该数据集，则删除该数据集时，无法自动删除数据集文件\n"
+                                "如果您不复制该数据集，则删除该数据集时，无法同时删除数据集文件\n"
                                 "这是因为，我们无法确定数据集中哪部分是真正的数据，哪部分是您的文件\n"
                                 "直接删除的话，您的数据很可能被误删\n"
                                 "您可以点击“返回”并勾选“拷贝数据集”来解决这个问题\n", ("仍然继续", "返回"))
@@ -149,7 +150,10 @@ class AddDatasetDialog(QDialog, Ui_Dialog):
                 result = window.exec_()
                 if result == window.Rejected:
                     return
+                log = ChangeLog.load(d)
+                log.append(os.path.abspath(f"dataset/{d}/dataset.json"))
                 shutil.copyfile(self.cocoLabelEdit.text(), f"dataset/{d}/dataset.json")
+                log.save(d)
                 self.config = dataset_config.DatasetConfig.from_type("coco", {"name": self.cocoName.text(),
                                                                               "image_path": f"dataset/{d}/images",
                                                                               "label_path": f"dataset/{d}/dataset.json"})

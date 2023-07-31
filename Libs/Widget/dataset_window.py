@@ -2,6 +2,7 @@ import os.path
 
 from ..Ui.ui_dataset_window import Ui_Form
 from .common_dialog import CommonDialog
+from .delete_dataset_dialog import DeleteDatasetDialog
 from PySide2.QtWidgets import QWidget, QFileDialog, QMessageBox
 from PySide2.QtCore import Qt, Slot, QUrl
 from PySide2.QtGui import QDesktopServices
@@ -103,3 +104,10 @@ class DatasetWindow(QWidget, Ui_Form):
             self.config.image_path = self.imagePathEdit.text()
             self.config.label_path = self.labelPathEdit.text()
             self.master.update_dataset_info(self.config)
+
+    @Slot()
+    def on_deleteDatasetButton_clicked(self):
+        dialog = DeleteDatasetDialog(self.config, self)
+        if dialog.exec_() == dialog.Accepted:
+            self.master.delete_dataset(self.config)
+            self.hide()

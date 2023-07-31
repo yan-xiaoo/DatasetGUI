@@ -7,6 +7,7 @@ from .. import dataset_config
 from .. import changelog
 from .common_dialog import CommonDialog
 from .add_dataset_dialog import AddDatasetDialog
+from .delete_dataset_dialog import DeleteDatasetDialog
 from .dataset_window import DatasetWindow
 
 
@@ -52,7 +53,10 @@ class MainWindow(QMainWindow, Ui_MainWindow):
                 self.dataset_manager.remove(dataset)
                 id_ = dataset_config.get_id_by_config(dataset)
                 if id_ is not None:
-                    changelog.delete_changelog(id_)
+                    try:
+                        changelog.delete_changelog(id_)
+                    except FileNotFoundError:
+                        pass
                 lost.append(f"名为 {dataset.name} 的数据集")
         if lost:
             dialog = CommonDialog(self, "数据集丢失", "以下数据集的图片与标签均已丢失。它们已被从记录中移除。",
@@ -80,7 +84,10 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         index = self.dataset_manager.index(config)
         self.dataset_manager.pop(index)
         self.delete_dataset_from_display(index)
-        self.detail_window_dict.pop(config)
+        try:
+            self.detail_window_dict.pop(config)
+        except KeyError:
+            pass
         # 删除数据集文件（可选的）
 
     def delete_dataset_from_display(self, row):
@@ -94,6 +101,12 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         add_dataset = AddDatasetDialog(self)
         if add_dataset.exec_() == add_dataset.Accepted:
             self.add_dataset(add_dataset.config)
+
+    @Slot()
+    def on_action_delete_dataset_triggered(self):
+        dialog = DeleteDatasetDialog(self.dataset_manager[self.main_table.currentRow()], self)
+        if dialog.exec_() == dialog.Accepted:
+            self.delete_dataset(dialog.config)
 
     @Slot()
     def on_action_detail_triggered(self):

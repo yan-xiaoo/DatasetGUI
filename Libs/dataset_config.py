@@ -71,5 +71,14 @@ def get_available_id():
 def get_id_by_config(config: DatasetConfig):
     if config.image_path.startswith("dataset/"):
         return int(config.image_path.split("/")[1])
+    elif os.path.relpath(config.image_path).startswith("dataset/"):
+        return int(os.path.relpath(config.image_path).split("/")[1])
     else:
         return None
+
+
+if __name__ == "__main__":
+    os.chdir("..")
+    print(get_id_by_config(CocoDataset("test", "/Users/liyanxiao/PycharmProjects/DatasetGUI/dataset/100", "dataset/0")))
+    print(get_id_by_config(CocoDataset("test", "dataset/100", "dataset/0")))
+    print(get_id_by_config(CocoDataset("test", "/Users/liyanxiao", "/Users/liyanxiao/PycharmProjects/DatasetGUI/dataset/0")))

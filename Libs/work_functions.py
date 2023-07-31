@@ -15,6 +15,10 @@ class CopyDir(ProcessFunction):
 
     def run(self):
         self.setText.emit(self.description)
+        try:
+            self.change_log = ChangeLog.load(self.index)
+        except FileNotFoundError:
+            pass
         for root, dirs, files in os.walk(self.src):
             maximum = len(files)
             self.setMaximum.emit(maximum)
@@ -64,3 +68,30 @@ class CopyDir(ProcessFunction):
             self.makedirs(os.path.dirname(directory))
             os.mkdir(directory)
             self.change_log.append(os.path.abspath(directory))
+
+
+class ClearDir(ProcessFunction):
+    def __init__(self, index, description="正在清除数据集文件"):
+        super().__init__()
+        self.index = index
+        self.description = description
+
+    def run(self):
+        log = ChangeLog.load(self.index)
+        self.setMaximum.emit(len(log))
+        self.setText.emit(self.description)
+        for i in range(len(log) - 1, -1, -1):
+            self.setProgress.emit(i)
+            f = log[i]
+            print("Removing ", f)
+            if os.path.isfile(f):
+                os.remove(f)
+            elif os.path.isdir(f):
+                try:
+                    os.rmdir(f)
+                except OSError:
+                    print(f"Failed to remove {f}, it is not empty")
+            self.setDetailedText.emit(f"正在删除 {os.path.relpath(f, 'dataset')} {i}/{len(log)}")
+        os.remove(f"dataset/changelog/{self.index}.txt")
+        self.has_finished.emit()
+        return
