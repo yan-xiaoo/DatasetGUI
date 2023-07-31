@@ -11,7 +11,7 @@
    </rect>
   </property>
   <property name="windowTitle">
-   <string>Form</string>
+   <string>数据集详情</string>
   </property>
   <layout class="QVBoxLayout" name="verticalLayout">
    <item>
@@ -139,7 +139,7 @@
       <item row="0" column="1">
        <widget class="QPushButton" name="copyDatasetButton">
         <property name="enabled">
-         <bool>true</bool>
+         <bool>false</bool>
         </property>
         <property name="text">
          <string>复制…</string>
@@ -178,6 +178,9 @@
       </item>
       <item row="2" column="1">
        <widget class="QPushButton" name="deleteDatasetButton">
+        <property name="enabled">
+         <bool>true</bool>
+        </property>
         <property name="text">
          <string>删除…</string>
         </property>
@@ -196,7 +199,7 @@
       <item row="2" column="2">
        <widget class="QPushButton" name="cleanDatasetButton">
         <property name="enabled">
-         <bool>true</bool>
+         <bool>false</bool>
         </property>
         <property name="text">
          <string>清理…</string>
@@ -208,6 +211,24 @@
    </item>
   </layout>
  </widget>
+ <tabstops>
+  <tabstop>nameEdit</tabstop>
+  <tabstop>imagePathEdit</tabstop>
+  <tabstop>browseImagePath</tabstop>
+  <tabstop>showImagePathButton</tabstop>
+  <tabstop>labelPathEdit</tabstop>
+  <tabstop>browseLabelPath</tabstop>
+  <tabstop>showLabelPathButton</tabstop>
+  <tabstop>update_info</tabstop>
+  <tabstop>pushButton_5</tabstop>
+  <tabstop>copyDatasetButton</tabstop>
+  <tabstop>pushButton_7</tabstop>
+  <tabstop>pushButton</tabstop>
+  <tabstop>pushButton_8</tabstop>
+  <tabstop>pushButton_9</tabstop>
+  <tabstop>deleteDatasetButton</tabstop>
+  <tabstop>cleanDatasetButton</tabstop>
+ </tabstops>
  <resources/>
  <connections/>
 </ui>

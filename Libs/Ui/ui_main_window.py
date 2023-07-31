@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
 ################################################################################
-## Form generated from reading UI file 'main_windowhigqlD.ui'
+## Form generated from reading UI file 'main_windowmOGQAX.ui'
 ##
 ## Created by: Qt User Interface Compiler version 5.15.2
 ##
@@ -111,6 +111,9 @@ class Ui_MainWindow(object):
         ___qtablewidgetitem1.setText(QCoreApplication.translate("MainWindow", u"\u7c7b\u578b", None));
         ___qtablewidgetitem2 = self.main_table.horizontalHeaderItem(2)
         ___qtablewidgetitem2.setText(QCoreApplication.translate("MainWindow", u"\u4f4d\u7f6e", None));
+#if QT_CONFIG(tooltip)
+        self.main_table.setToolTip(QCoreApplication.translate("MainWindow", u"\u53cc\u51fb\u4e00\u884c\u6216\u53f3\u952e\u5e76\u9009\u62e9\u201c\u8be6\u60c5\u201d\u53ef\u4ee5\u8fdb\u5165\u7ba1\u7406\u754c\u9762", None))
+#endif // QT_CONFIG(tooltip)
         self.menu.setTitle(QCoreApplication.translate("MainWindow", u"\u6587\u4ef6", None))
     # retranslateUi
 

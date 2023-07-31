@@ -7,6 +7,7 @@ from .. import dataset_config
 from .. import changelog
 from .common_dialog import CommonDialog
 from .add_dataset_dialog import AddDatasetDialog
+from .dataset_window import DatasetWindow
 
 
 class MainWindow(QMainWindow, Ui_MainWindow):
@@ -20,6 +21,7 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         for one_dataset in self.dataset_manager:
             self.add_dataset_to_display(config=one_dataset)
 
+        self.detail_window_dict = {}
         self.context_menu = QMenu(self)
         self.context_menu.addActions([self.action_detail, self.action_delete_dataset])
         self.main_table.customContextMenuRequested.connect(self.contextMenu)
@@ -68,6 +70,19 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         self.main_table.setItem(row, 1, type_)
         self.main_table.setItem(row, 2, label_path)
 
+    def update_dataset_info(self, config):
+        row = self.dataset_manager.index(config)
+        self.main_table.item(row, 0).setText(config.name)
+        self.main_table.item(row, 1).setText(config.type_.upper())
+        self.main_table.item(row, 2).setText(config.label_path)
+
+    def delete_dataset(self, config):
+        index = self.dataset_manager.index(config)
+        self.dataset_manager.pop(index)
+        self.delete_dataset_from_display(index)
+        self.detail_window_dict.pop(config)
+        # 删除数据集文件（可选的）
+
     def delete_dataset_from_display(self, row):
         self.main_table.removeRow(row)
 
@@ -79,3 +94,14 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         add_dataset = AddDatasetDialog(self)
         if add_dataset.exec_() == add_dataset.Accepted:
             self.add_dataset(add_dataset.config)
+
+    @Slot()
+    def on_action_detail_triggered(self):
+        row = self.main_table.currentRow()
+        dataset = self.dataset_manager[row]
+        window = self.detail_window_dict.setdefault(dataset, DatasetWindow(dataset, self))
+        window.show()
+
+    @Slot()
+    def on_main_table_doubleClicked(self):
+        self.on_action_detail_triggered()

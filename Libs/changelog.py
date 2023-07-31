@@ -6,6 +6,8 @@ if not os.path.exists("dataset/changelog"):
 
 
 def delete_changelog(index: int):
+    if index is None:
+        return
     os.remove(f"dataset/changelog/{index}.txt")
 
 
