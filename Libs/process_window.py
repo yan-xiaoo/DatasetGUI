@@ -10,7 +10,7 @@ class ProcessFunction(QThread):
 
     setText = Signal(str)
     setDetailedText = Signal(str)
-    finished = Signal()
+    has_finished = Signal()
     stopped = Signal()
     setProgress = Signal(int)
     setRange = Signal(int, int)
@@ -41,7 +41,7 @@ class ProcessWindow(QDialog, Ui_Dialog):
         self.stopChildProcess.connect(self.work_function.stopProcess)
         self.work_function.setText.connect(self.setText)
         self.work_function.setDetailedText.connect(self.setDetailedText)
-        self.work_function.finished.connect(self.finishProcess)
+        self.work_function.has_finished.connect(self.finishProcess)
         self.work_function.stopped.connect(self.stopProcess)
         self.work_function.setProgress.connect(self.setProgress)
         self.work_function.setRange.connect(self.setRange)

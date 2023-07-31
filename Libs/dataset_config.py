@@ -66,3 +66,10 @@ def get_available_id():
         if not os.path.exists(f"dataset/{i}"):
             return i
         i += 1
+
+
+def get_id_by_config(config: DatasetConfig):
+    if config.image_path.startswith("dataset/"):
+        return int(config.image_path.split("/")[1])
+    else:
+        return None

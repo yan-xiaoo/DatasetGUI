@@ -5,6 +5,10 @@ if not os.path.exists("dataset/changelog"):
     os.makedirs("dataset/changelog")
 
 
+def delete_changelog(index: int):
+    os.remove(f"dataset/changelog/{index}.txt")
+
+
 class ChangeLog(list):
     def save(self, index: int):
         with open(f"dataset/changelog/{index}.txt", "w") as f:

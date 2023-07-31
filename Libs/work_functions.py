@@ -41,11 +41,11 @@ class CopyDir(ProcessFunction):
                             os.remove(f)
                         elif os.path.isdir(f):
                             os.rmdir(f)
-                        self.setDetailedText.emit(f"正在删除 {f} {i}/{len(self.change_log)}")
+                        self.setDetailedText.emit(f"正在删除 {os.path.relpath(f, 'dataset')} {i}/{len(self.change_log)}")
                     self.stopped.emit()
                     return
         self.change_log.save(self.index)
-        self.finished.emit()
+        self.has_finished.emit()
         return
 
     def copyfile(self, src, dst):
