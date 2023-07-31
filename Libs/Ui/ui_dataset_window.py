@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
 ################################################################################
-## Form generated from reading UI file 'dataset_windowWEnOHG.ui'
+## Form generated from reading UI file 'dataset_windowAizogu.ui'
 ##
 ## Created by: Qt User Interface Compiler version 5.15.2
 ##
@@ -106,7 +106,7 @@ class Ui_Form(object):
 
         self.copyDatasetButton = QPushButton(self.groupBox_2)
         self.copyDatasetButton.setObjectName(u"copyDatasetButton")
-        self.copyDatasetButton.setEnabled(False)
+        self.copyDatasetButton.setEnabled(True)
 
         self.gridLayout_2.addWidget(self.copyDatasetButton, 0, 1, 1, 1)
 
@@ -142,7 +142,7 @@ class Ui_Form(object):
 
         self.cleanDatasetButton = QPushButton(self.groupBox_2)
         self.cleanDatasetButton.setObjectName(u"cleanDatasetButton")
-        self.cleanDatasetButton.setEnabled(False)
+        self.cleanDatasetButton.setEnabled(True)
 
         self.gridLayout_2.addWidget(self.cleanDatasetButton, 2, 2, 1, 1)
 

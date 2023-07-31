@@ -3,6 +3,8 @@ import os.path
 from ..Ui.ui_dataset_window import Ui_Form
 from .common_dialog import CommonDialog
 from .delete_dataset_dialog import DeleteDatasetDialog
+from ..Dataset.clean_coco import clean
+from .copy_dataset_dialog import CopyDatasetDialog
 from PySide2.QtWidgets import QWidget, QFileDialog, QMessageBox
 from PySide2.QtCore import Qt, Slot, QUrl
 from PySide2.QtGui import QDesktopServices
@@ -111,3 +113,17 @@ class DatasetWindow(QWidget, Ui_Form):
         if dialog.exec_() == dialog.Accepted:
             self.master.delete_dataset(self.config)
             self.hide()
+
+    @Slot()
+    def on_cleanDatasetButton_clicked(self):
+        dialog = CommonDialog(self, "清理数据集", "您确认要清理数据集吗？",
+                              "清理数据集会清理没有任何标签的图片信息，以及没有任何标签的类别。\n"
+                              "清理一般情况下不会造成数据集的任何问题")
+        if dialog.exec_() == dialog.Accepted:
+            clean(self.config.label_path)
+
+    @Slot()
+    def on_copyDatasetButton_clicked(self):
+        dialog = CopyDatasetDialog(self.config, self)
+        if dialog.exec_() == dialog.Accepted:
+            self.master.add_dataset(dialog.new_config)

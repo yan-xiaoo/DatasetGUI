@@ -26,12 +26,12 @@
       <item>
        <widget class="QLabel" name="label">
         <property name="text">
-         <string>新的名字</string>
+         <string>新数据集的名字</string>
         </property>
        </widget>
       </item>
       <item>
-       <widget class="QLineEdit" name="lineEdit"/>
+       <widget class="QLineEdit" name="nameEdit"/>
       </item>
      </layout>
     </widget>
@@ -50,7 +50,7 @@
        </widget>
       </item>
       <item row="0" column="0">
-       <widget class="QRadioButton" name="radioButton">
+       <widget class="QRadioButton" name="freeRadioButton">
         <property name="text">
          <string>自定义位置</string>
         </property>
@@ -64,7 +64,7 @@
        </widget>
       </item>
       <item row="3" column="0">
-       <widget class="QRadioButton" name="radioButton_2">
+       <widget class="QRadioButton" name="setRadioButton">
         <property name="text">
          <string>工作目录下</string>
         </property>
@@ -74,20 +74,20 @@
        </widget>
       </item>
       <item row="2" column="1">
-       <widget class="QLineEdit" name="lineEdit_3"/>
+       <widget class="QLineEdit" name="labelPathEdit"/>
       </item>
       <item row="1" column="1">
-       <widget class="QLineEdit" name="lineEdit_2"/>
+       <widget class="QLineEdit" name="imagePathEdit"/>
       </item>
       <item row="1" column="2">
-       <widget class="QPushButton" name="pushButton">
+       <widget class="QPushButton" name="imageButton">
         <property name="text">
          <string>浏览…</string>
         </property>
        </widget>
       </item>
       <item row="2" column="2">
-       <widget class="QPushButton" name="pushButton_2">
+       <widget class="QPushButton" name="labelButton">
         <property name="text">
          <string>浏览…</string>
         </property>
@@ -124,6 +124,34 @@
    </item>
   </layout>
  </widget>
+ <tabstops>
+  <tabstop>nameEdit</tabstop>
+  <tabstop>freeRadioButton</tabstop>
+  <tabstop>imagePathEdit</tabstop>
+  <tabstop>imageButton</tabstop>
+  <tabstop>labelPathEdit</tabstop>
+  <tabstop>labelButton</tabstop>
+  <tabstop>setRadioButton</tabstop>
+  <tabstop>okButton</tabstop>
+  <tabstop>cancelButton</tabstop>
+ </tabstops>
  <resources/>
- <connections/>
+ <connections>
+  <connection>
+   <sender>cancelButton</sender>
+   <signal>clicked()</signal>
+   <receiver>Dialog</receiver>
+   <slot>reject()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>290</x>
+     <y>264</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>199</x>
+     <y>149</y>
+    </hint>
+   </hints>
+  </connection>
+ </connections>
 </ui>

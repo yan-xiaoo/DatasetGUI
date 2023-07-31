@@ -5,11 +5,11 @@ import shutil
 
 
 class CopyDir(ProcessFunction):
-    def __init__(self, src, dst, index, description="正在拷贝数据集文件"):
+    def __init__(self, src, dst, index=None, description="正在拷贝数据集文件"):
         super().__init__()
         self.src = src
         self.dst = dst
-        self.index = index
+        self.index = index if index is not None else "temp"
         self.description = description
         self.change_log = ChangeLog()
 

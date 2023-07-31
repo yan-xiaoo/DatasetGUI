@@ -48,6 +48,7 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         lost = []
         for dataset in self.dataset_manager[:]:
             if not self.check_dataset_exist(dataset):
+                print(f"Removing {dataset}")
                 index = self.dataset_manager.index(dataset)
                 self.delete_dataset_from_display(index)
                 self.dataset_manager.remove(dataset)
@@ -60,7 +61,7 @@ class MainWindow(QMainWindow, Ui_MainWindow):
                 lost.append(f"名为 {dataset.name} 的数据集")
         if lost:
             dialog = CommonDialog(self, "数据集丢失", "以下数据集的图片与标签均已丢失。它们已被从记录中移除。",
-                                  "\n".join(lost), ["确定", "确定"])
+                                  "\n".join(lost), ["确定", "你没得选"])
             dialog.exec_()
 
     def add_dataset_to_display(self, config: dataset_config.DatasetConfig, row=None):
