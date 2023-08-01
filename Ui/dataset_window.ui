@@ -206,6 +206,13 @@
         </property>
        </widget>
       </item>
+      <item row="2" column="0">
+       <widget class="QPushButton" name="exportButton">
+        <property name="text">
+         <string>压缩并导出…</string>
+        </property>
+       </widget>
+      </item>
      </layout>
     </widget>
    </item>
