@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
 ################################################################################
-## Form generated from reading UI file 'dataset_windowAizogu.ui'
+## Form generated from reading UI file 'dataset_windowNBEmkO.ui'
 ##
 ## Created by: Qt User Interface Compiler version 5.15.2
 ##
@@ -146,6 +146,11 @@ class Ui_Form(object):
 
         self.gridLayout_2.addWidget(self.cleanDatasetButton, 2, 2, 1, 1)
 
+        self.exportButton = QPushButton(self.groupBox_2)
+        self.exportButton.setObjectName(u"exportButton")
+
+        self.gridLayout_2.addWidget(self.exportButton, 2, 0, 1, 1)
+
 
         self.verticalLayout.addWidget(self.groupBox_2)
 
@@ -203,5 +208,6 @@ class Ui_Form(object):
         self.deleteDatasetButton.setText(QCoreApplication.translate("Form", u"\u5220\u9664\u2026", None))
         self.pushButton.setText(QCoreApplication.translate("Form", u"\u63d0\u53d6\u90e8\u5206\u5206\u7c7b\u2026", None))
         self.cleanDatasetButton.setText(QCoreApplication.translate("Form", u"\u6e05\u7406\u2026", None))
+        self.exportButton.setText(QCoreApplication.translate("Form", u"\u538b\u7f29\u5e76\u5bfc\u51fa\u2026", None))
     # retranslateUi
 

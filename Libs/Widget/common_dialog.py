@@ -13,6 +13,8 @@ class CommonDialog(QDialog, Ui_Dialog):
             self.textLabel.setText(text)
         if detail_text is not None:
             self.detailTextLabel.setText(detail_text)
+        else:
+            self.detailTextLabel.setVisible(False)
         if button_texts is not None:
             self.okButton.setText(button_texts[0])
             self.cancelButton.setText(button_texts[1])
@@ -21,4 +23,8 @@ class CommonDialog(QDialog, Ui_Dialog):
         self.textLabel.setText(text)
 
     def setDetailedText(self, text):
-        self.detailTextLabel.setText(text)
+        if text:
+            self.detailTextLabel.setText(text)
+            self.detailTextLabel.setVisible(True)
+        else:
+            self.detailTextLabel.setVisible(False)

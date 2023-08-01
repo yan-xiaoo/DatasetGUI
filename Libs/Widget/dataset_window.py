@@ -5,6 +5,7 @@ from .common_dialog import CommonDialog
 from .delete_dataset_dialog import DeleteDatasetDialog
 from ..Dataset.clean_coco import clean
 from .copy_dataset_dialog import CopyDatasetDialog
+from .archive_dataset_dialog import ArchiveDatasetDialog
 from PySide2.QtWidgets import QWidget, QFileDialog, QMessageBox
 from PySide2.QtCore import Qt, Slot, QUrl
 from PySide2.QtGui import QDesktopServices
@@ -127,3 +128,8 @@ class DatasetWindow(QWidget, Ui_Form):
         dialog = CopyDatasetDialog(self.config, self)
         if dialog.exec_() == dialog.Accepted:
             self.master.add_dataset(dialog.new_config)
+
+    @Slot()
+    def on_exportButton_clicked(self):
+        dialog = ArchiveDatasetDialog(self.config, self)
+        dialog.exec_()

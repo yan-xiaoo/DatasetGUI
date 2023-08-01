@@ -92,10 +92,11 @@ class CopyDatasetDialog(QDialog, Ui_Dialog):
         window = ProcessWindow(thread, self, title="正在拷贝数据集图片", stoppable=True)
         if window.exec_() == window.Rejected:
             return
-        if self.config.type_ == 'coco':
+        if self.config.type_ == 'coco' and d is not None:
             log = ChangeLog.load(d)
             log.append(os.path.abspath(self.new_config.label_path))
             shutil.copyfile(self.config.label_path, self.new_config.label_path)
+            log.save(d)
         else:
             thread = CopyDir(self.config.label_path, self.new_config.label_path, d, "正在拷贝数据集标签")
             window = ProcessWindow(thread, self, title="正在拷贝数据集标签", stoppable=True)
