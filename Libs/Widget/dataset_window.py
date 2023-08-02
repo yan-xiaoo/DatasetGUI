@@ -6,6 +6,7 @@ from .delete_dataset_dialog import DeleteDatasetDialog
 from ..Dataset.clean_coco import clean
 from .copy_dataset_dialog import CopyDatasetDialog
 from .archive_dataset_dialog import ArchiveDatasetDialog
+from .divide_dataset_dialog import DivideDatasetDialog
 from PySide2.QtWidgets import QWidget, QFileDialog, QMessageBox
 from PySide2.QtCore import Qt, Slot, QUrl
 from PySide2.QtGui import QDesktopServices
@@ -132,4 +133,9 @@ class DatasetWindow(QWidget, Ui_Form):
     @Slot()
     def on_exportButton_clicked(self):
         dialog = ArchiveDatasetDialog(self.config, self)
+        dialog.exec_()
+
+    @Slot()
+    def on_divideButton_clicked(self):
+        dialog = DivideDatasetDialog(self.config, self)
         dialog.exec_()

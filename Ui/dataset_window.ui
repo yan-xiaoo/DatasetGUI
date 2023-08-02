@@ -157,9 +157,9 @@
        </widget>
       </item>
       <item row="1" column="1">
-       <widget class="QPushButton" name="pushButton_8">
+       <widget class="QPushButton" name="divideButton">
         <property name="enabled">
-         <bool>false</bool>
+         <bool>true</bool>
         </property>
         <property name="text">
          <string>划分为训练与验证…</string>
@@ -231,7 +231,7 @@
   <tabstop>copyDatasetButton</tabstop>
   <tabstop>pushButton_7</tabstop>
   <tabstop>pushButton</tabstop>
-  <tabstop>pushButton_8</tabstop>
+  <tabstop>divideButton</tabstop>
   <tabstop>pushButton_9</tabstop>
   <tabstop>deleteDatasetButton</tabstop>
   <tabstop>cleanDatasetButton</tabstop>

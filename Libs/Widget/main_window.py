@@ -9,15 +9,16 @@ from .common_dialog import CommonDialog
 from .add_dataset_dialog import AddDatasetDialog
 from .delete_dataset_dialog import DeleteDatasetDialog
 from .dataset_window import DatasetWindow
+import json
 
 
 class MainWindow(QMainWindow, Ui_MainWindow):
     def __init__(self):
         super().__init__()
         self.setupUi(self)
-        if os.path.exists("dataset/config.json"):
+        try:
             self.dataset_manager = dataset_config.DatasetManager.load("dataset/config.json")
-        else:
+        except (FileNotFoundError, json.JSONDecodeError):
             self.dataset_manager = dataset_config.DatasetManager()
         for one_dataset in self.dataset_manager:
             self.add_dataset_to_display(config=one_dataset)
@@ -48,28 +49,36 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         lost = []
         for dataset in self.dataset_manager[:]:
             if not self.check_dataset_exist(dataset):
-                print(f"Removing {dataset}")
-                index = self.dataset_manager.index(dataset)
-                self.delete_dataset_from_display(index)
-                self.dataset_manager.remove(dataset)
-                id_ = dataset_config.get_id_by_config(dataset)
-                if id_ is not None:
-                    try:
-                        changelog.delete_changelog(id_)
-                    except FileNotFoundError:
-                        pass
+                self.remove_lost_dataset(dataset)
                 lost.append(f"名为 {dataset.name} 的数据集")
         if lost:
             dialog = CommonDialog(self, "数据集丢失", "以下数据集的图片与标签均已丢失。它们已被从记录中移除。",
                                   "\n".join(lost), ["确定", "你没得选"])
             dialog.exec_()
 
+    def remove_lost_dataset(self, config):
+        print(f"Removing {config}")
+        index = self.dataset_manager.index(config)
+        self.delete_dataset_from_display(index)
+        self.dataset_manager.remove(config)
+        id_ = dataset_config.get_id_by_config(config)
+        if id_ is not None:
+            try:
+                changelog.delete_changelog(id_)
+            except FileNotFoundError:
+                pass
+
     def add_dataset_to_display(self, config: dataset_config.DatasetConfig, row=None):
         if row is None:
             row = self.main_table.rowCount()
         self.main_table.insertRow(row)
         name = QTableWidgetItem(config.name)
-        type_ = QTableWidgetItem(config.type_.upper())
+        if config.data_type == dataset_config.DataType.TRAIN:
+            type_ = QTableWidgetItem(f"{config.type_.upper()}训练集")
+        elif config.data_type == dataset_config.DataType.VAL:
+            type_ = QTableWidgetItem(f"{config.type_.upper()}验证集")
+        else:
+            type_ = QTableWidgetItem(config.type_.upper())
         label_path = QTableWidgetItem(config.label_path)
         self.main_table.setItem(row, 0, name)
         self.main_table.setItem(row, 1, type_)

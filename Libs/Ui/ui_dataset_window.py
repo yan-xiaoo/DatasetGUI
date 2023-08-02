@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
 ################################################################################
-## Form generated from reading UI file 'dataset_windowNBEmkO.ui'
+## Form generated from reading UI file 'dataset_windowBQtfkV.ui'
 ##
 ## Created by: Qt User Interface Compiler version 5.15.2
 ##
@@ -116,11 +116,11 @@ class Ui_Form(object):
 
         self.gridLayout_2.addWidget(self.pushButton_7, 0, 2, 1, 1)
 
-        self.pushButton_8 = QPushButton(self.groupBox_2)
-        self.pushButton_8.setObjectName(u"pushButton_8")
-        self.pushButton_8.setEnabled(False)
+        self.divideButton = QPushButton(self.groupBox_2)
+        self.divideButton.setObjectName(u"divideButton")
+        self.divideButton.setEnabled(True)
 
-        self.gridLayout_2.addWidget(self.pushButton_8, 1, 1, 1, 1)
+        self.gridLayout_2.addWidget(self.divideButton, 1, 1, 1, 1)
 
         self.pushButton_9 = QPushButton(self.groupBox_2)
         self.pushButton_9.setObjectName(u"pushButton_9")
@@ -165,8 +165,8 @@ class Ui_Form(object):
         QWidget.setTabOrder(self.pushButton_5, self.copyDatasetButton)
         QWidget.setTabOrder(self.copyDatasetButton, self.pushButton_7)
         QWidget.setTabOrder(self.pushButton_7, self.pushButton)
-        QWidget.setTabOrder(self.pushButton, self.pushButton_8)
-        QWidget.setTabOrder(self.pushButton_8, self.pushButton_9)
+        QWidget.setTabOrder(self.pushButton, self.divideButton)
+        QWidget.setTabOrder(self.divideButton, self.pushButton_9)
         QWidget.setTabOrder(self.pushButton_9, self.deleteDatasetButton)
         QWidget.setTabOrder(self.deleteDatasetButton, self.cleanDatasetButton)
 
@@ -203,7 +203,7 @@ class Ui_Form(object):
         self.pushButton_5.setText(QCoreApplication.translate("Form", u"\u6807\u6ce8\u2026", None))
         self.copyDatasetButton.setText(QCoreApplication.translate("Form", u"\u590d\u5236\u2026", None))
         self.pushButton_7.setText(QCoreApplication.translate("Form", u"\u5408\u5e76\u2026", None))
-        self.pushButton_8.setText(QCoreApplication.translate("Form", u"\u5212\u5206\u4e3a\u8bad\u7ec3\u4e0e\u9a8c\u8bc1\u2026", None))
+        self.divideButton.setText(QCoreApplication.translate("Form", u"\u5212\u5206\u4e3a\u8bad\u7ec3\u4e0e\u9a8c\u8bc1\u2026", None))
         self.pushButton_9.setText(QCoreApplication.translate("Form", u"\u8f6c\u6362\u4e3a\u2026", None))
         self.deleteDatasetButton.setText(QCoreApplication.translate("Form", u"\u5220\u9664\u2026", None))
         self.pushButton.setText(QCoreApplication.translate("Form", u"\u63d0\u53d6\u90e8\u5206\u5206\u7c7b\u2026", None))
