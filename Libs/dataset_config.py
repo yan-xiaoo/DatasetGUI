@@ -42,12 +42,9 @@ class MergedDatasetConfig(ABC):
         :param common_image_path: 训练集与验证集共同的图片路径。这个路径需要满足：包含训练集与验证集所有的图片数据
         :param common_label_path: 训练集与验证集共同的标签路径
         """
-        assert os.path.dirname(train_dataset.image_path) == os.path.dirname(val_dataset.image_path), "不是标准的数据集，无法使用"
+        assert os.path.dirname(train_dataset.image_path) == os.path.dirname(val_dataset.image_path), "两数据集图片文件夹不再同一文件夹下"
         assert train_dataset.type_ == val_dataset.type_, "不是相同类型的数据集"
-        if train_dataset.type_ == 'yolo':
-            assert os.path.dirname(train_dataset.label_path) == os.path.dirname(val_dataset.label_path), "不是标准的数据集，无法使用"
-        else:
-            assert os.path.dirname(train_dataset.label_path) == os.path.dirname(val_dataset.label_path), "不是标准的数据集，无法使用"
+        assert os.path.dirname(train_dataset.label_path) == os.path.dirname(val_dataset.label_path), "两数据集标签文件夹不在同一文件夹下"
         self.train = train_dataset
         self.val = val_dataset
         if common_image_path is None:
@@ -214,3 +211,4 @@ if __name__ == "__main__":
 
     m2 = DatasetManager.load("temp.json")
     print(m2)
+    print(m2[0].parent)
