@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
 ################################################################################
-## Form generated from reading UI file 'copy_dataset_dialogYXCcIt.ui'
+## Form generated from reading UI file 'copy_dataset_dialogEWIaxE.ui'
 ##
 ## Created by: Qt User Interface Compiler version 5.15.2
 ##
@@ -17,7 +17,7 @@ class Ui_Dialog(object):
     def setupUi(self, Dialog):
         if not Dialog.objectName():
             Dialog.setObjectName(u"Dialog")
-        Dialog.resize(400, 300)
+        Dialog.resize(400, 321)
         self.verticalLayout = QVBoxLayout(Dialog)
         self.verticalLayout.setObjectName(u"verticalLayout")
         self.frame = QFrame(Dialog)
@@ -87,6 +87,12 @@ class Ui_Dialog(object):
 
         self.verticalLayout.addWidget(self.groupBox)
 
+        self.copyMergeBox = QCheckBox(Dialog)
+        self.copyMergeBox.setObjectName(u"copyMergeBox")
+        self.copyMergeBox.setChecked(True)
+
+        self.verticalLayout.addWidget(self.copyMergeBox)
+
         self.frame_2 = QFrame(Dialog)
         self.frame_2.setObjectName(u"frame_2")
         self.frame_2.setFrameShape(QFrame.StyledPanel)
@@ -131,6 +137,7 @@ class Ui_Dialog(object):
         self.setRadioButton.setText(QCoreApplication.translate("Dialog", u"\u5de5\u4f5c\u76ee\u5f55\u4e0b", None))
         self.imageButton.setText(QCoreApplication.translate("Dialog", u"\u6d4f\u89c8\u2026", None))
         self.labelButton.setText(QCoreApplication.translate("Dialog", u"\u6d4f\u89c8\u2026", None))
+        self.copyMergeBox.setText(QCoreApplication.translate("Dialog", u"\u540c\u65f6\u590d\u5236", None))
         self.okButton.setText(QCoreApplication.translate("Dialog", u"\u786e\u8ba4", None))
         self.cancelButton.setText(QCoreApplication.translate("Dialog", u"\u53d6\u6d88", None))
     # retranslateUi

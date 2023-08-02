@@ -18,9 +18,11 @@ class CommonDialog(QDialog, Ui_Dialog):
         if button_texts is not None:
             self.okButton.setText(button_texts[0])
             self.cancelButton.setText(button_texts[1])
+        self.adjustSize()
 
     def setText(self, text):
         self.textLabel.setText(text)
+        self.adjustSize()
 
     def setDetailedText(self, text):
         if text:
@@ -28,3 +30,4 @@ class CommonDialog(QDialog, Ui_Dialog):
             self.detailTextLabel.setVisible(True)
         else:
             self.detailTextLabel.setVisible(False)
+        self.adjustSize()

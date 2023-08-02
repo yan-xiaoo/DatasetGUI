@@ -41,6 +41,7 @@ class DatasetWindow(QWidget, Ui_Form):
             self.cleanDatasetButton.setVisible(True)
         if config.data_type in (dataset_config.DataType.TRAIN, dataset_config.DataType.VAL):
             self.divideButton.setEnabled(False)
+            self.divideButton.setToolTip("该数据集已经是训练/验证集，无法再划分")
 
     @Slot()
     def on_browseImagePath_clicked(self):
@@ -146,7 +147,11 @@ class DatasetWindow(QWidget, Ui_Form):
     def on_copyDatasetButton_clicked(self):
         dialog = CopyDatasetDialog(self.config, self)
         if dialog.exec_() == dialog.Accepted:
-            self.master.add_dataset(dialog.new_config)
+            if dialog.new_config.data_type != dataset_config.DataType.MERGED:
+                self.master.add_dataset(dialog.new_config)
+            else:
+                self.master.add_dataset(dialog.new_config.train)
+                self.master.add_dataset(dialog.new_config.val)
 
     @Slot()
     def on_exportButton_clicked(self):

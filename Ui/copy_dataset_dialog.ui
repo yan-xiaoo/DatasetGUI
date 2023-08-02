@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>400</width>
-    <height>300</height>
+    <height>321</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -94,6 +94,16 @@
        </widget>
       </item>
      </layout>
+    </widget>
+   </item>
+   <item>
+    <widget class="QCheckBox" name="copyMergeBox">
+     <property name="text">
+      <string>同时复制</string>
+     </property>
+     <property name="checked">
+      <bool>true</bool>
+     </property>
     </widget>
    </item>
    <item>
