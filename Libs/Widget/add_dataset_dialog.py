@@ -421,7 +421,7 @@ class AddDatasetDialog(QDialog, Ui_Dialog):
                         result.extend(result2)
                     except AssertionError:
                         QMessageBox.warning(self, "警告", "您选择的标签文件不是一个合法的COCO标签文件,无法继续\n"
-                                                          "可以通过取消勾选“检查数据集”跳过本检查")
+                                            "可以通过取消勾选“检查数据集”跳过本检查")
                         return
                     if len(result) > 2:
                         dialog = CommonDialog(self, "警告", "数据集中存在问题",

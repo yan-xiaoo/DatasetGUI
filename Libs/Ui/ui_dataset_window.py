@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
 ################################################################################
-## Form generated from reading UI file 'dataset_windowBQtfkV.ui'
+## Form generated from reading UI file 'dataset_windowPAeIeL.ui'
 ##
 ## Created by: Qt User Interface Compiler version 5.15.2
 ##
@@ -207,7 +207,7 @@ class Ui_Form(object):
         self.pushButton_9.setText(QCoreApplication.translate("Form", u"\u8f6c\u6362\u4e3a\u2026", None))
         self.deleteDatasetButton.setText(QCoreApplication.translate("Form", u"\u5220\u9664\u2026", None))
         self.pushButton.setText(QCoreApplication.translate("Form", u"\u63d0\u53d6\u90e8\u5206\u5206\u7c7b\u2026", None))
-        self.cleanDatasetButton.setText(QCoreApplication.translate("Form", u"\u6e05\u7406\u2026", None))
+        self.cleanDatasetButton.setText(QCoreApplication.translate("Form", u"\u68c0\u67e5\u5e76\u6e05\u7406\u2026", None))
         self.exportButton.setText(QCoreApplication.translate("Form", u"\u538b\u7f29\u5e76\u5bfc\u51fa\u2026", None))
     # retranslateUi
 

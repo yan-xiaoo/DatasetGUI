@@ -3,7 +3,8 @@ import os.path
 from ..Ui.ui_dataset_window import Ui_Form
 from .common_dialog import CommonDialog
 from .delete_dataset_dialog import DeleteDatasetDialog
-from ..Dataset.clean_coco import clean
+from ..Dataset import clean_coco
+from .. import dataset_config
 from .copy_dataset_dialog import CopyDatasetDialog
 from .archive_dataset_dialog import ArchiveDatasetDialog
 from .divide_dataset_dialog import DivideDatasetDialog
@@ -28,11 +29,18 @@ class DatasetWindow(QWidget, Ui_Form):
         self.nameEdit.setText(config.name)
         self.imagePathEdit.setText(config.image_path)
         self.labelPathEdit.setText(config.label_path)
-        self.dataTypeLabel.setText(f"{config.type_} 格式的数据集")
+        if config.data_type == dataset_config.DataType.TRAIN:
+            self.dataTypeLabel.setText(f"{config.type_} 格式的训练集")
+        elif config.data_type == dataset_config.DataType.VAL:
+            self.dataTypeLabel.setText(f"{config.type_} 格式的验证集")
+        else:
+            self.dataTypeLabel.setText(f"{config.type_} 格式的数据集")
         if config.type_ != 'coco':
             self.cleanDatasetButton.setVisible(False)
         else:
             self.cleanDatasetButton.setVisible(True)
+        if config.data_type in (dataset_config.DataType.TRAIN, dataset_config.DataType.VAL):
+            self.divideButton.setEnabled(False)
 
     @Slot()
     def on_browseImagePath_clicked(self):
@@ -113,16 +121,26 @@ class DatasetWindow(QWidget, Ui_Form):
     def on_deleteDatasetButton_clicked(self):
         dialog = DeleteDatasetDialog(self.config, self)
         if dialog.exec_() == dialog.Accepted:
-            self.master.delete_dataset(self.config)
+            if self.config.parent is not None:
+                self.master.delete_dataset(self.config.parent.train)
+                self.master.delete_dataset(self.config.parent.val)
+            else:
+                self.master.delete_dataset(self.config)
             self.hide()
 
     @Slot()
     def on_cleanDatasetButton_clicked(self):
-        dialog = CommonDialog(self, "清理数据集", "您确认要清理数据集吗？",
-                              "清理数据集会清理没有任何标签的图片信息，以及没有任何标签的类别。\n"
-                              "清理一般情况下不会造成数据集的任何问题")
-        if dialog.exec_() == dialog.Accepted:
-            clean(self.config.label_path)
+        result = clean_coco.check_coco(self.config.label_path)
+        if result:
+            dialog = CommonDialog(self, "清理数据集", "数据集中存在如下问题",
+                                  "\n".join(result) + "\n是否要清理数据集？",
+                                  ("清理", "返回"))
+            if dialog.exec_() == dialog.Rejected:
+                return
+            else:
+                clean_coco.clean(self.config.label_path)
+        else:
+            QMessageBox.information(self, "提示", "数据集中没有任何问题，不需要清理")
 
     @Slot()
     def on_copyDatasetButton_clicked(self):

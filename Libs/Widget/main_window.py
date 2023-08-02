@@ -87,7 +87,13 @@ class MainWindow(QMainWindow, Ui_MainWindow):
     def update_dataset_info(self, config):
         row = self.dataset_manager.index(config)
         self.main_table.item(row, 0).setText(config.name)
-        self.main_table.item(row, 1).setText(config.type_.upper())
+        if config.data_type == dataset_config.DataType.TRAIN:
+            type_ = f"{config.type_.upper()}训练集"
+        elif config.data_type == dataset_config.DataType.VAL:
+            type_ = f"{config.type_.upper()}验证集"
+        else:
+            type_ = config.type_.upper()
+        self.main_table.item(row, 1).setText(type_)
         self.main_table.item(row, 2).setText(config.label_path)
 
     def delete_dataset(self, config):
@@ -120,7 +126,11 @@ class MainWindow(QMainWindow, Ui_MainWindow):
     def on_action_delete_dataset_triggered(self):
         dialog = DeleteDatasetDialog(self.dataset_manager[self.main_table.currentRow()], self)
         if dialog.exec_() == dialog.Accepted:
-            self.delete_dataset(dialog.config)
+            if dialog.config.parent is not None:
+                self.delete_dataset(dialog.config.parent.train)
+                self.delete_dataset(dialog.config.parent.val)
+            else:
+                self.delete_dataset(dialog.config)
             self.check_datasets()
 
     @Slot()
