@@ -110,13 +110,18 @@ class MainWindow(QMainWindow, Ui_MainWindow):
     def on_action_add_dataset_triggered(self):
         add_dataset = AddDatasetDialog(self)
         if add_dataset.exec_() == add_dataset.Accepted:
-            self.add_dataset(add_dataset.config)
+            if add_dataset.config.data_type == dataset_config.DataType.MERGED:
+                self.add_dataset(add_dataset.config.train)
+                self.add_dataset(add_dataset.config.val)
+            else:
+                self.add_dataset(add_dataset.config)
 
     @Slot()
     def on_action_delete_dataset_triggered(self):
         dialog = DeleteDatasetDialog(self.dataset_manager[self.main_table.currentRow()], self)
         if dialog.exec_() == dialog.Accepted:
             self.delete_dataset(dialog.config)
+            self.check_datasets()
 
     @Slot()
     def on_action_detail_triggered(self):

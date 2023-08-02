@@ -382,14 +382,24 @@ class AddDatasetDialog(QDialog, Ui_Dialog):
                                         "您不能选择该文件夹作为验证集标签文件夹，因为它会引起递归拷贝。取消勾选“拷贝数据集”后，您可以选择该文件夹")
                     return
 
-            train_config = dataset_config.DatasetConfig.from_type(type_, {
-                "name": self.cocoTrainEdit.text(),
-                "image_path": self.cocoTrainImageEdit.text(),
-                "label_path": self.cocoTrainLabelEdit.text()})
-            val_config = dataset_config.DatasetConfig.from_type(type_, {
-                "name": self.cocoValEdit.text(),
-                "image_path": self.cocoValImageEdit.text(),
-                "label_path": self.cocoValLabelEdit.text()})
+            if type_ == 'coco':
+                train_config = dataset_config.DatasetConfig.from_type(type_, {
+                    "name": self.cocoTrainEdit.text(),
+                    "image_path": self.cocoTrainImageEdit.text(),
+                    "label_path": self.cocoTrainLabelEdit.text()})
+                val_config = dataset_config.DatasetConfig.from_type(type_, {
+                    "name": self.cocoValEdit.text(),
+                    "image_path": self.cocoValImageEdit.text(),
+                    "label_path": self.cocoValLabelEdit.text()})
+            else:
+                train_config = dataset_config.DatasetConfig.from_type(type_, {
+                    "name": self.yoloTrainEdit.text(),
+                    "image_path": self.yoloTrainImageEdit.text(),
+                    "label_path": self.yoloTrainLabelEdit.text()})
+                val_config = dataset_config.DatasetConfig.from_type(type_, {
+                    "name": self.yoloValEdit.text(),
+                    "image_path": self.yoloValImageEdit.text(),
+                    "label_path": self.yoloValLabelEdit.text()})
 
             if not self.copyDatasetBox.checkState():
                 warn = CommonDialog(self, "警告", "删除该数据集时存在安全隐患",
@@ -411,9 +421,9 @@ class AddDatasetDialog(QDialog, Ui_Dialog):
                         result.extend(result2)
                     except AssertionError:
                         QMessageBox.warning(self, "警告", "您选择的标签文件不是一个合法的COCO标签文件,无法继续\n"
-                                            "可以通过取消勾选“检查数据集”跳过本检查")
+                                                          "可以通过取消勾选“检查数据集”跳过本检查")
                         return
-                    if result:
+                    if len(result) > 2:
                         dialog = CommonDialog(self, "警告", "数据集中存在问题",
                                               "您可以选择“返回”并勾选清理数据集来解决一部分问题\n\n" +
                                               "\n".join(result),
@@ -422,17 +432,17 @@ class AddDatasetDialog(QDialog, Ui_Dialog):
                             return
                 if self.copyDatasetBox.checkState():
                     id_ = dataset_config.get_available_id()
-                    thread = CopyDir(self.cocoTrainImageEdit.text(), os.path.join("dataset", f"{id}", "images/train"),
+                    thread = CopyDir(self.cocoTrainImageEdit.text(), os.path.join("dataset", f"{id_}", "images/train"),
                                      id_, "正在拷贝训练集图片")
                     window = ProcessWindow(thread, self, "添加数据集", stoppable=True)
                     if window.exec_() == window.Rejected:
                         return
                     log = ChangeLog.load(id_)
                     log.append(os.path.abspath(f"dataset/{id_}/train.json"))
-                    shutil.copyfile(self.cocoLabelEdit.text(), f"dataset/{id_}/train.json")
+                    shutil.copyfile(self.cocoTrainLabelEdit.text(), f"dataset/{id_}/train.json")
                     log.save(id_)
 
-                    thread = CopyDir(self.cocoValImageEdit.text(), os.path.join("dataset", f"{id}", "images/val"), id_,
+                    thread = CopyDir(self.cocoValImageEdit.text(), os.path.join("dataset", f"{id_}", "images/val"), id_,
                                      "正在拷贝验证集图片")
                     window = ProcessWindow(thread, self, "添加数据集", stoppable=True)
                     if window.exec_() == window.Rejected:
@@ -456,7 +466,8 @@ class AddDatasetDialog(QDialog, Ui_Dialog):
                     try:
                         self.config = dataset_config.MergedDatasetConfig(train_config, val_config)
                     except AssertionError as e:
-                        QMessageBox.warning(self, "警告", "尝试建立数据集关系出现错误：\n" + str(e) + "\n选择“拷贝数据集到工作目录下”可能可以解决问题")
+                        QMessageBox.warning(self, "警告", "尝试建立数据集关系出现错误：\n" + str(
+                            e) + "\n选择“拷贝数据集到工作目录下”可能可以解决问题")
                         return
 
                 if self.cleanDatasetBox.checkState() and type_ == 'coco':
@@ -465,24 +476,25 @@ class AddDatasetDialog(QDialog, Ui_Dialog):
             elif type_ == 'yolo':
                 if self.copyDatasetBox.checkState():
                     id_ = dataset_config.get_available_id()
-                    thread = CopyDir(self.yoloTrainImageEdit.text(), os.path.join("dataset", f"{id}", "images/train"),
+                    thread = CopyDir(self.yoloTrainImageEdit.text(), os.path.join("dataset", f"{id_}", "images/train"),
                                      id_, "正在拷贝训练集图片")
                     window = ProcessWindow(thread, self, "添加数据集", stoppable=True)
                     if window.exec_() == window.Rejected:
                         return
-                    thread = CopyDir(self.yoloValImageEdit.text(), os.path.join("dataset", f"{id}", "images/val"), id_,
+                    thread = CopyDir(self.yoloValImageEdit.text(), os.path.join("dataset", f"{id_}", "images/val"), id_,
                                      "正在拷贝验证集图片")
                     window = ProcessWindow(thread, self, "添加数据集", stoppable=True)
                     if window.exec_() == window.Rejected:
                         return
 
-                    thread = CopyDir(self.yoloTrainLabelEdit.text(), os.path.join("dataset", f"{id}", "labels/train"), id_,
+                    thread = CopyDir(self.yoloTrainLabelEdit.text(), os.path.join("dataset", f"{id_}", "labels/train"),
+                                     id_,
                                      "正在拷贝训练集标签")
                     window = ProcessWindow(thread, self, "添加数据集", stoppable=True)
                     if window.exec_() == window.Rejected:
                         return
-                    thread = CopyDir(self.yoloValLabelEdit.text(), os.path.join("dataset", f"{id}", "labels/val"), id_,
-                                        "正在拷贝验证集标签")
+                    thread = CopyDir(self.yoloValLabelEdit.text(), os.path.join("dataset", f"{id_}", "labels/val"), id_,
+                                     "正在拷贝验证集标签")
                     window = ProcessWindow(thread, self, "添加数据集", stoppable=True)
                     if window.exec_() == window.Rejected:
                         return
@@ -500,5 +512,7 @@ class AddDatasetDialog(QDialog, Ui_Dialog):
                     try:
                         self.config = dataset_config.MergedDatasetConfig(train_config, val_config)
                     except AssertionError as e:
-                        QMessageBox.warning(self, "警告", "尝试建立数据集关系出现错误：\n" + str(e) + "\n选择“拷贝数据集到工作目录下”可能可以解决问题")
+                        QMessageBox.warning(self, "警告", "尝试建立数据集关系出现错误：\n" + str(
+                            e) + "\n选择“拷贝数据集到工作目录下”可能可以解决问题")
                         return
+            self.accept()
