@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>448</width>
-    <height>315</height>
+    <height>336</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -89,6 +89,13 @@
      </property>
      <property name="checked">
       <bool>true</bool>
+     </property>
+    </widget>
+   </item>
+   <item>
+    <widget class="QCheckBox" name="archiveMergeBox">
+     <property name="text">
+      <string>同时压缩</string>
      </property>
     </widget>
    </item>

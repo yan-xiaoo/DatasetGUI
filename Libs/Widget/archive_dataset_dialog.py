@@ -3,6 +3,7 @@ from PySide2.QtWidgets import QDialog, QFileDialog, QMessageBox
 from PySide2.QtGui import QDesktopServices
 from PySide2.QtCore import Slot, QUrl
 from .common_dialog import CommonDialog
+from ..dataset_config import DatasetConfig, DataType
 from ..process_window import ProcessWindow, ProcessFunction
 import os
 import tarfile
@@ -10,12 +11,21 @@ import zipfile
 
 
 class ArchiveDatasetDialog(QDialog, Ui_Dialog):
-    def __init__(self, config, parent=None):
+    def __init__(self, config: DatasetConfig, parent=None):
         super().__init__(parent)
         self.config = config
         self.setupUi(self)
-        self.nameEdit.setText(self.config.name)
+        self.nameEdit.setText(self.config.name.removesuffix('_训练').removesuffix("_验证"))
         self.outputEdit.setText(os.path.abspath("export"))
+
+        if self.config.data_type == DataType.TRAIN:
+            self.archiveMergeBox.setChecked(True)
+            self.archiveMergeBox.setText('同时压缩验证集')
+        elif self.config.data_type == DataType.VAL:
+            self.archiveMergeBox.setChecked(True)
+            self.archiveMergeBox.setText('同时压缩训练集')
+        else:
+            self.archiveMergeBox.setVisible(False)
 
     @Slot()
     def on_outputButton_clicked(self):
@@ -37,65 +47,174 @@ class ArchiveDatasetDialog(QDialog, Ui_Dialog):
         if not os.path.isdir(self.outputEdit.text()):
             QMessageBox.warning(self, "警告", "您选择的导出位置不存在或不是文件夹")
             return
-        if os.path.dirname(self.config.label_path) == os.path.dirname(self.config.image_path):
+        if (os.path.dirname(self.config.label_path) == os.path.dirname(self.config.image_path) or
+                os.path.dirname(os.path.dirname(self.config.image_path)) == os.path.dirname(
+                    self.config.label_path) and self.config.type_ == 'coco' and self.archiveMergeBox.checkState()
+                or (os.path.dirname(os.path.dirname(self.config.label_path)) == os.path.dirname(os.path.dirname(
+                    self.config.image_path)) and self.config.type_ == 'yolo' and self.archiveMergeBox.checkState())):
             together = True
         else:
             together = False
 
         if together:
-            if self.zipButton.isChecked():
-                result = self.achieve_dataset_zip(os.path.join(self.outputEdit.text(), self.nameEdit.text() + '.zip'),
+            if not self.archiveMergeBox.checkState():
+                if self.zipButton.isChecked():
+                    result = self.achieve_dataset_zip(os.path.join(self.outputEdit.text(), self.nameEdit.text() + '.zip'),
+                                                      os.path.dirname(self.config.image_path),
+                                                      except_ds_store=self.ignoreBox.checkState(),
+                                                      hint="正在压缩数据集")
+                    if result == self.Rejected:
+                        return
+                else:
+                    result = self.achieve_dataset(os.path.join(self.outputEdit.text(), self.nameEdit.text() + '.tar.gz'),
                                                   os.path.dirname(self.config.image_path),
                                                   except_ds_store=self.ignoreBox.checkState(),
                                                   hint="正在压缩数据集")
-                if result == self.Rejected:
-                    return
+                    if result == self.Rejected:
+                        return
             else:
-                result = self.achieve_dataset(os.path.join(self.outputEdit.text(), self.nameEdit.text() + '.tar.gz'),
-                                              os.path.dirname(self.config.image_path),
-                                              except_ds_store=self.ignoreBox.checkState(),
-                                              hint="正在压缩数据集")
-                if result == self.Rejected:
-                    return
+                if self.zipButton.isChecked():
+                    result = self.achieve_dataset_zip(os.path.join(self.outputEdit.text(), self.nameEdit.text() + '.zip'),
+                                                      os.path.dirname(os.path.dirname(self.config.image_path)),
+                                                      except_ds_store=self.ignoreBox.checkState(),
+                                                      hint="正在压缩两个数据集")
+                    if result == self.Rejected:
+                        return
+                else:
+                    result = self.achieve_dataset(os.path.join(self.outputEdit.text(), self.nameEdit.text() + '.tar.gz'),
+                                                  os.path.dirname(os.path.dirname(self.config.image_path)),
+                                                  except_ds_store=self.ignoreBox.checkState(),
+                                                  hint="正在压缩两个数据集")
+                    if result == self.Rejected:
+                        return
         else:
             if self.zipButton.isChecked():
                 if self.config.type_ == 'coco':
-                    result = self.achieve_dataset_zip(
-                        os.path.join(self.outputEdit.text(), self.nameEdit.text() + '.zip'),
-                        self.config.image_path, except_ds_store=self.ignoreBox.checkState(),
-                        hint="正在压缩数据集", additional_file=self.config.label_path)
-                    if result == ProcessWindow.Rejected:
-                        return
+                    if self.archiveMergeBox.checkState():
+                        result = self.achieve_dataset_zip(
+                            os.path.join(self.outputEdit.text(), self.nameEdit.text() + '_训练.zip'),
+                            self.config.parent.train.image_path, except_ds_store=self.ignoreBox.checkState(),
+                            hint="正在压缩训练集", additional_file=self.config.parent.train.label_path)
+                        if result == ProcessWindow.Rejected:
+                            return
+                        result = self.achieve_dataset_zip(
+                            os.path.join(self.outputEdit.text(), self.nameEdit.text() + '_验证.zip'),
+                            self.config.parent.val.image_path, except_ds_store=self.ignoreBox.checkState(),
+                            hint="正在压缩验证集", additional_file=self.config.parent.val.label_path)
+                        if result == ProcessWindow.Rejected:
+                            return
+                    else:
+                        result = self.achieve_dataset_zip(
+                            os.path.join(self.outputEdit.text(), self.nameEdit.text() + '.zip'),
+                            self.config.image_path, except_ds_store=self.ignoreBox.checkState(),
+                            hint="正在压缩数据集", additional_file=self.config.label_path)
+                        if result == ProcessWindow.Rejected:
+                            return
                 else:
-                    result = self.achieve_dataset_zip(
-                        os.path.join(self.outputEdit.text(), self.nameEdit.text() + '_image.zip'),
-                        self.config.image_path, except_ds_store=self.ignoreBox.checkState(), hint="正在压缩数据集图片")
-                    if result == ProcessWindow.Rejected:
-                        return
-                    result = self.achieve_dataset_zip(
-                        os.path.join(self.outputEdit.text(), self.nameEdit.text() + '_label.zip'),
-                        self.config.label_path, except_ds_store=self.ignoreBox.checkState(), hint="正在压缩数据集标签")
-                    if result == ProcessWindow.Rejected:
-                        return
+                    if self.archiveMergeBox.checkState():
+                        result = self.achieve_dataset_zip(
+                            os.path.join(self.outputEdit.text(), self.nameEdit.text() + '_训练图片.zip'),
+                            self.config.parent.train.image_path,
+                            except_ds_store=self.ignoreBox.checkState(),
+                            hint="正在压缩训练集图片")
+                        if result == ProcessWindow.Rejected:
+                            return
+                        result = self.achieve_dataset_zip(
+                            os.path.join(self.outputEdit.text(), self.nameEdit.text() + '_训练标签.zip'),
+                            self.config.parent.train.label_path,
+                            except_ds_store=self.ignoreBox.checkState(),
+                            hint="正在压缩训练集标签")
+                        if result == ProcessWindow.Rejected:
+                            return
+
+                        result = self.achieve_dataset_zip(
+                            os.path.join(self.outputEdit.text(), self.nameEdit.text() + '_验证图片.zip'),
+                            self.config.parent.val.image_path,
+                            except_ds_store=self.ignoreBox.checkState(),
+                            hint="正在压缩验证集图片")
+                        if result == ProcessWindow.Rejected:
+                            return
+                        result = self.achieve_dataset_zip(
+                            os.path.join(self.outputEdit.text(), self.nameEdit.text() + '_验证标签.zip'),
+                            self.config.parent.val.label_path,
+                            except_ds_store=self.ignoreBox.checkState(),
+                            hint="正在压缩验证集标签")
+                        if result == ProcessWindow.Rejected:
+                            return
+                    else:
+                        result = self.achieve_dataset_zip(
+                            os.path.join(self.outputEdit.text(), self.nameEdit.text() + '_image.zip'),
+                            self.config.image_path, except_ds_store=self.ignoreBox.checkState(),
+                            hint="正在压缩数据集图片")
+                        if result == ProcessWindow.Rejected:
+                            return
+                        result = self.achieve_dataset_zip(
+                            os.path.join(self.outputEdit.text(), self.nameEdit.text() + '_label.zip'),
+                            self.config.label_path, except_ds_store=self.ignoreBox.checkState(),
+                            hint="正在压缩数据集标签")
+                        if result == ProcessWindow.Rejected:
+                            return
             else:
                 if self.config.type_ == "coco":
-                    result = self.achieve_dataset(
-                        os.path.join(self.outputEdit.text(), self.nameEdit.text() + '.tar.gz'),
-                        self.config.image_path, except_ds_store=self.ignoreBox.checkState(),
-                        hint="正在压缩数据集", additional_file=self.config.label_path)
-                    if result == ProcessWindow.Rejected:
-                        return
+                    if self.archiveMergeBox.checkState():
+                        result = self.achieve_dataset(
+                            os.path.join(self.outputEdit.text(), self.nameEdit.text() + '_训练.tar.gz'),
+                            self.config.parent.train.image_path, except_ds_store=self.ignoreBox.checkState(),
+                            hint="正在压缩训练集", additional_file=self.config.parent.train.label_path)
+                        if result == ProcessWindow.Rejected:
+                            return
+                        result = self.achieve_dataset(
+                            os.path.join(self.outputEdit.text(), self.nameEdit.text() + '_验证.tar.gz'),
+                            self.config.parent.val.image_path, except_ds_store=self.ignoreBox.checkState(),
+                            hint="正在压缩验证集", additional_file=self.config.parent.val.label_path)
+                        if result == ProcessWindow.Rejected:
+                            return
+                    else:
+                        result = self.achieve_dataset(
+                            os.path.join(self.outputEdit.text(), self.nameEdit.text() + '.tar.gz'),
+                            self.config.image_path, except_ds_store=self.ignoreBox.checkState(),
+                            hint="正在压缩数据集", additional_file=self.config.label_path)
+                        if result == ProcessWindow.Rejected:
+                            return
                 else:
-                    result = self.achieve_dataset(
-                        os.path.join(self.outputEdit.text(), self.nameEdit.text() + '_image.tar.gz'),
-                        self.config.image_path, except_ds_store=self.ignoreBox.checkState(), hint="正在压缩数据集图片")
-                    if result == ProcessWindow.Rejected:
-                        return
-                    result = self.achieve_dataset(
-                        os.path.join(self.outputEdit.text(), self.nameEdit.text() + '_label.tar.gz'),
-                        self.config.label_path, except_ds_store=self.ignoreBox.checkState(), hint="正在压缩数据集标签")
-                    if result == ProcessWindow.Rejected:
-                        return
+                    if self.archiveMergeBox.checkState():
+                        result = self.achieve_dataset(
+                            os.path.join(self.outputEdit.text(), self.nameEdit.text() + '_训练图片.tar.gz'),
+                            self.config.parent.train.image_path, except_ds_store=self.ignoreBox.checkState(),
+                            hint="正在压缩训练集图片")
+                        if result == ProcessWindow.Rejected:
+                            return
+                        result = self.achieve_dataset(
+                            os.path.join(self.outputEdit.text(), self.nameEdit.text() + '_训练标签.tar.gz'),
+                            self.config.parent.train.label_path, except_ds_store=self.ignoreBox.checkState(),
+                            hint="正在压缩训练集标签")
+                        if result == ProcessWindow.Rejected:
+                            return
+                        result = self.achieve_dataset(
+                            os.path.join(self.outputEdit.text(), self.nameEdit.text() + '_验证图片.tar.gz'),
+                            self.config.parent.val.image_path, except_ds_store=self.ignoreBox.checkState(),
+                            hint="正在压缩验证集图片")
+                        if result == ProcessWindow.Rejected:
+                            return
+                        result = self.achieve_dataset(
+                            os.path.join(self.outputEdit.text(), self.nameEdit.text() + '_验证标签.tar.gz'),
+                            self.config.parent.val.label_path, except_ds_store=self.ignoreBox.checkState(),
+                            hint="正在压缩验证集标签")
+                        if result == ProcessWindow.Rejected:
+                            return
+                    else:
+                        result = self.achieve_dataset(
+                            os.path.join(self.outputEdit.text(), self.nameEdit.text() + '_image.tar.gz'),
+                            self.config.image_path, except_ds_store=self.ignoreBox.checkState(),
+                            hint="正在压缩数据集图片")
+                        if result == ProcessWindow.Rejected:
+                            return
+                        result = self.achieve_dataset(
+                            os.path.join(self.outputEdit.text(), self.nameEdit.text() + '_label.tar.gz'),
+                            self.config.label_path, except_ds_store=self.ignoreBox.checkState(),
+                            hint="正在压缩数据集标签")
+                        if result == ProcessWindow.Rejected:
+                            return
 
         desktop = QDesktopServices()
         desktop.openUrl(QUrl.fromLocalFile(self.outputEdit.text()))

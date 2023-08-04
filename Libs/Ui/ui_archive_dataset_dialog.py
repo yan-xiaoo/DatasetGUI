@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
 ################################################################################
-## Form generated from reading UI file 'archive_dataset_dialogYeiyuB.ui'
+## Form generated from reading UI file 'archive_dataset_dialogdhRBVx.ui'
 ##
 ## Created by: Qt User Interface Compiler version 5.15.2
 ##
@@ -17,7 +17,7 @@ class Ui_Dialog(object):
     def setupUi(self, Dialog):
         if not Dialog.objectName():
             Dialog.setObjectName(u"Dialog")
-        Dialog.resize(448, 315)
+        Dialog.resize(448, 336)
         self.verticalLayout = QVBoxLayout(Dialog)
         self.verticalLayout.setObjectName(u"verticalLayout")
         self.frame = QFrame(Dialog)
@@ -78,6 +78,11 @@ class Ui_Dialog(object):
 
         self.verticalLayout.addWidget(self.ignoreBox)
 
+        self.archiveMergeBox = QCheckBox(Dialog)
+        self.archiveMergeBox.setObjectName(u"archiveMergeBox")
+
+        self.verticalLayout.addWidget(self.archiveMergeBox)
+
         self.label_2 = QLabel(Dialog)
         self.label_2.setObjectName(u"label_2")
 
@@ -128,6 +133,7 @@ class Ui_Dialog(object):
         self.ignoreBox.setToolTip(QCoreApplication.translate("Dialog", u"\u8be5\u9009\u9879\u5728macOS\u5916\u7684\u7cfb\u7edf\u4e0a\u6ca1\u6709\u4f5c\u7528", None))
 #endif // QT_CONFIG(tooltip)
         self.ignoreBox.setText(QCoreApplication.translate("Dialog", u"\u5ffd\u7565.DS_Store\u6587\u4ef6", None))
+        self.archiveMergeBox.setText(QCoreApplication.translate("Dialog", u"\u540c\u65f6\u538b\u7f29", None))
         self.label_2.setText(QCoreApplication.translate("Dialog", u"\u6570\u636e\u96c6\u8f83\u5927\u65f6\uff0c\u538b\u7f29\u901f\u5ea6\u6162\u4e3a\u6b63\u5e38\u73b0\u8c61\n"
 "\u672c\u7a0b\u5e8f\u7684\u538b\u7f29\u901f\u5ea6\u5927\u6982\u548c\u64cd\u4f5c\u7cfb\u7edf\u81ea\u5e26\u5de5\u5177\u4e00\u6837", None))
         self.okButton.setText(QCoreApplication.translate("Dialog", u"\u786e\u8ba4", None))
