@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>400</width>
-    <height>383</height>
+    <height>301</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -100,32 +100,6 @@
     </widget>
    </item>
    <item>
-    <widget class="QGroupBox" name="groupBox_3">
-     <property name="title">
-      <string>添加方式</string>
-     </property>
-     <layout class="QVBoxLayout" name="verticalLayout_2">
-      <item>
-       <widget class="QRadioButton" name="twodirButton">
-        <property name="text">
-         <string>分别放在两个目录下</string>
-        </property>
-       </widget>
-      </item>
-      <item>
-       <widget class="QRadioButton" name="onedirButton">
-        <property name="text">
-         <string>按照数据集标准格式，存放在同一目录下</string>
-        </property>
-        <property name="checked">
-         <bool>true</bool>
-        </property>
-       </widget>
-      </item>
-     </layout>
-    </widget>
-   </item>
-   <item>
     <widget class="QFrame" name="frame">
      <property name="frameShape">
       <enum>QFrame::StyledPanel</enum>
@@ -158,8 +132,6 @@
   <tabstop>valBox</tabstop>
   <tabstop>trainEdit</tabstop>
   <tabstop>valEdit</tabstop>
-  <tabstop>twodirButton</tabstop>
-  <tabstop>onedirButton</tabstop>
   <tabstop>okButton</tabstop>
   <tabstop>cancelButton</tabstop>
  </tabstops>

@@ -161,4 +161,6 @@ class DatasetWindow(QWidget, Ui_Form):
     @Slot()
     def on_divideButton_clicked(self):
         dialog = DivideDatasetDialog(self.config, self)
-        dialog.exec_()
+        if dialog.exec_() == dialog.Accepted and dialog.train_config is not None and dialog.val_config is not None:
+            self.master.add_dataset(dialog.train_config)
+            self.master.add_dataset(dialog.val_config)

@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
 ################################################################################
-## Form generated from reading UI file 'divide_dataset_dialogPxtQHb.ui'
+## Form generated from reading UI file 'divide_dataset_dialogYDOjAw.ui'
 ##
 ## Created by: Qt User Interface Compiler version 5.15.2
 ##
@@ -17,7 +17,7 @@ class Ui_Dialog(object):
     def setupUi(self, Dialog):
         if not Dialog.objectName():
             Dialog.setObjectName(u"Dialog")
-        Dialog.resize(400, 383)
+        Dialog.resize(400, 301)
         self.verticalLayout = QVBoxLayout(Dialog)
         self.verticalLayout.setObjectName(u"verticalLayout")
         self.groupBox = QGroupBox(Dialog)
@@ -85,24 +85,6 @@ class Ui_Dialog(object):
 
         self.verticalLayout.addWidget(self.groupBox_2)
 
-        self.groupBox_3 = QGroupBox(Dialog)
-        self.groupBox_3.setObjectName(u"groupBox_3")
-        self.verticalLayout_2 = QVBoxLayout(self.groupBox_3)
-        self.verticalLayout_2.setObjectName(u"verticalLayout_2")
-        self.twodirButton = QRadioButton(self.groupBox_3)
-        self.twodirButton.setObjectName(u"twodirButton")
-
-        self.verticalLayout_2.addWidget(self.twodirButton)
-
-        self.onedirButton = QRadioButton(self.groupBox_3)
-        self.onedirButton.setObjectName(u"onedirButton")
-        self.onedirButton.setChecked(True)
-
-        self.verticalLayout_2.addWidget(self.onedirButton)
-
-
-        self.verticalLayout.addWidget(self.groupBox_3)
-
         self.frame = QFrame(Dialog)
         self.frame.setObjectName(u"frame")
         self.frame.setFrameShape(QFrame.StyledPanel)
@@ -125,9 +107,7 @@ class Ui_Dialog(object):
         QWidget.setTabOrder(self.trainBox, self.valBox)
         QWidget.setTabOrder(self.valBox, self.trainEdit)
         QWidget.setTabOrder(self.trainEdit, self.valEdit)
-        QWidget.setTabOrder(self.valEdit, self.twodirButton)
-        QWidget.setTabOrder(self.twodirButton, self.onedirButton)
-        QWidget.setTabOrder(self.onedirButton, self.okButton)
+        QWidget.setTabOrder(self.valEdit, self.okButton)
         QWidget.setTabOrder(self.okButton, self.cancelButton)
 
         self.retranslateUi(Dialog)
@@ -145,9 +125,6 @@ class Ui_Dialog(object):
         self.groupBox_2.setTitle(QCoreApplication.translate("Dialog", u"\u65b0\u6570\u636e\u96c6\u540d\u79f0", None))
         self.label_4.setText(QCoreApplication.translate("Dialog", u"\u8bad\u7ec3\u96c6\u540d\u79f0", None))
         self.label_5.setText(QCoreApplication.translate("Dialog", u"\u9a8c\u8bc1\u96c6\u540d\u79f0", None))
-        self.groupBox_3.setTitle(QCoreApplication.translate("Dialog", u"\u6dfb\u52a0\u65b9\u5f0f", None))
-        self.twodirButton.setText(QCoreApplication.translate("Dialog", u"\u5206\u522b\u653e\u5728\u4e24\u4e2a\u76ee\u5f55\u4e0b", None))
-        self.onedirButton.setText(QCoreApplication.translate("Dialog", u"\u6309\u7167\u6570\u636e\u96c6\u6807\u51c6\u683c\u5f0f\uff0c\u5b58\u653e\u5728\u540c\u4e00\u76ee\u5f55\u4e0b", None))
         self.okButton.setText(QCoreApplication.translate("Dialog", u"\u786e\u8ba4", None))
         self.cancelButton.setText(QCoreApplication.translate("Dialog", u"\u53d6\u6d88", None))
     # retranslateUi

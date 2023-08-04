@@ -9,6 +9,8 @@ from .common_dialog import CommonDialog
 from .add_dataset_dialog import AddDatasetDialog
 from .delete_dataset_dialog import DeleteDatasetDialog
 from .dataset_window import DatasetWindow
+from ..work_functions import ClearDir
+from ..process_window import ProcessWindow
 import json
 
 
@@ -62,6 +64,10 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         self.delete_dataset_from_display(index)
         self.dataset_manager.remove(config)
         id_ = dataset_config.get_id_by_config(config)
+        if id_ is not None and os.path.exists(f"dataset/changelog/{id_}.txt"):
+            thread = ClearDir(id_, "正在清除数据集数据")
+            window = ProcessWindow(thread, self, stoppable=False)
+            window.exec_()
         if id_ is not None:
             try:
                 changelog.delete_changelog(id_)
@@ -97,7 +103,10 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         self.main_table.item(row, 2).setText(config.label_path)
 
     def delete_dataset(self, config):
-        index = self.dataset_manager.index(config)
+        try:
+            index = self.dataset_manager.index(config)
+        except ValueError:
+            return
         self.dataset_manager.pop(index)
         self.delete_dataset_from_display(index)
         try:
