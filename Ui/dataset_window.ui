@@ -117,7 +117,7 @@
    <item>
     <widget class="QGroupBox" name="groupBox_2">
      <property name="toolTip">
-      <string>无法点击的按钮就是还没做的（）</string>
+      <string/>
      </property>
      <property name="title">
       <string>操作</string>
@@ -127,6 +127,9 @@
        <widget class="QPushButton" name="pushButton_5">
         <property name="enabled">
          <bool>false</bool>
+        </property>
+        <property name="toolTip">
+         <string>尚未制作完成</string>
         </property>
         <property name="text">
          <string>标注…</string>
@@ -151,6 +154,9 @@
         <property name="enabled">
          <bool>false</bool>
         </property>
+        <property name="toolTip">
+         <string>尚未制作完成</string>
+        </property>
         <property name="text">
          <string>合并…</string>
         </property>
@@ -167,9 +173,12 @@
        </widget>
       </item>
       <item row="1" column="2">
-       <widget class="QPushButton" name="pushButton_9">
+       <widget class="QPushButton" name="formatButton">
         <property name="enabled">
-         <bool>false</bool>
+         <bool>true</bool>
+        </property>
+        <property name="toolTip">
+         <string/>
         </property>
         <property name="text">
          <string>转换为…</string>
@@ -190,6 +199,9 @@
        <widget class="QPushButton" name="pushButton">
         <property name="enabled">
          <bool>false</bool>
+        </property>
+        <property name="toolTip">
+         <string>尚未制作完成</string>
         </property>
         <property name="text">
          <string>提取部分分类…</string>
@@ -232,7 +244,7 @@
   <tabstop>pushButton_7</tabstop>
   <tabstop>pushButton</tabstop>
   <tabstop>divideButton</tabstop>
-  <tabstop>pushButton_9</tabstop>
+  <tabstop>formatButton</tabstop>
   <tabstop>deleteDatasetButton</tabstop>
   <tabstop>cleanDatasetButton</tabstop>
  </tabstops>

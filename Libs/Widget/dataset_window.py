@@ -8,6 +8,7 @@ from .. import dataset_config
 from .copy_dataset_dialog import CopyDatasetDialog
 from .archive_dataset_dialog import ArchiveDatasetDialog
 from .divide_dataset_dialog import DivideDatasetDialog
+from .format_dataset_dialog import FormatDatasetDialog
 from PySide2.QtWidgets import QWidget, QFileDialog, QMessageBox
 from PySide2.QtCore import Qt, Slot, QUrl
 from PySide2.QtGui import QDesktopServices
@@ -164,3 +165,13 @@ class DatasetWindow(QWidget, Ui_Form):
         if dialog.exec_() == dialog.Accepted and dialog.train_config is not None and dialog.val_config is not None:
             self.master.add_dataset(dialog.train_config)
             self.master.add_dataset(dialog.val_config)
+
+    @Slot()
+    def on_formatButton_clicked(self):
+        dialog = FormatDatasetDialog(self.config, self)
+        if dialog.exec_() == dialog.Accepted and dialog.new_config is not None:
+            if dialog.new_config.data_type == dataset_config.DataType.SINGLE:
+                self.master.add_dataset(dialog.new_config)
+            elif dialog.new_config.data_type == dataset_config.DataType.MERGED:
+                self.master.add_dataset(dialog.new_config.train)
+                self.master.add_dataset(dialog.new_config.val)

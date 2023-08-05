@@ -8,6 +8,7 @@ from ..work_functions import CopyCertainImage
 from ..process_window import ProcessWindow
 from ..Dataset.split_coco import category_split
 from ..Dataset.split_yolo import basic_split
+from ..Dataset.yolo_to_coco import YoloSearch
 from .. import dataset_config
 from ..changelog import ChangeLog
 import json
@@ -80,7 +81,11 @@ class DivideDatasetDialog(QDialog, Ui_Dialog):
             train_labels, val_labels = basic_split(self.config.label_path, int(self.trainBox.value()) / 100,
                                                    int(self.valBox.value()) / 100)
             search = YoloSearch(self.config.image_path)
-            train_images = [search.search(one) for one in train_labels]
+            train_images = []
+            for one in train_labels:
+                result = search.search(one)
+                train_images.append(result)
+                print(f"Generating {result} from {one}")
             val_images = [search.search(one) for one in val_labels]
             id_ = dataset_config.get_available_id()
             thread = CopyCertainImage(self.config.label_path, train_labels, f"dataset/{id_}/labels/train", id_, "正在复制训练集标签")
@@ -126,13 +131,3 @@ class DivideDatasetDialog(QDialog, Ui_Dialog):
 
         self.accept()
 
-
-class YoloSearch:
-    def __init__(self, image_path):
-        self.image_path = image_path
-        self.files = os.listdir(image_path)
-
-    def search(self, label_path):
-        for one in self.files:
-            if one.startswith(os.path.basename(label_path).split('.')[0]):
-                return one

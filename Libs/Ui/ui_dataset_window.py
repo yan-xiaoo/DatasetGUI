@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
 ################################################################################
-## Form generated from reading UI file 'dataset_windowPAeIeL.ui'
+## Form generated from reading UI file 'dataset_windowRAIDCu.ui'
 ##
 ## Created by: Qt User Interface Compiler version 5.15.2
 ##
@@ -122,11 +122,11 @@ class Ui_Form(object):
 
         self.gridLayout_2.addWidget(self.divideButton, 1, 1, 1, 1)
 
-        self.pushButton_9 = QPushButton(self.groupBox_2)
-        self.pushButton_9.setObjectName(u"pushButton_9")
-        self.pushButton_9.setEnabled(False)
+        self.formatButton = QPushButton(self.groupBox_2)
+        self.formatButton.setObjectName(u"formatButton")
+        self.formatButton.setEnabled(True)
 
-        self.gridLayout_2.addWidget(self.pushButton_9, 1, 2, 1, 1)
+        self.gridLayout_2.addWidget(self.formatButton, 1, 2, 1, 1)
 
         self.deleteDatasetButton = QPushButton(self.groupBox_2)
         self.deleteDatasetButton.setObjectName(u"deleteDatasetButton")
@@ -166,8 +166,8 @@ class Ui_Form(object):
         QWidget.setTabOrder(self.copyDatasetButton, self.pushButton_7)
         QWidget.setTabOrder(self.pushButton_7, self.pushButton)
         QWidget.setTabOrder(self.pushButton, self.divideButton)
-        QWidget.setTabOrder(self.divideButton, self.pushButton_9)
-        QWidget.setTabOrder(self.pushButton_9, self.deleteDatasetButton)
+        QWidget.setTabOrder(self.divideButton, self.formatButton)
+        QWidget.setTabOrder(self.formatButton, self.deleteDatasetButton)
         QWidget.setTabOrder(self.deleteDatasetButton, self.cleanDatasetButton)
 
         self.retranslateUi(Form)
@@ -197,15 +197,27 @@ class Ui_Form(object):
         self.showLabelPathButton.setText(QCoreApplication.translate("Form", u"\u5728\u7cfb\u7edf\u4e2d\u663e\u793a", None))
         self.dataTypeLabel.setText("")
 #if QT_CONFIG(tooltip)
-        self.groupBox_2.setToolTip(QCoreApplication.translate("Form", u"\u65e0\u6cd5\u70b9\u51fb\u7684\u6309\u94ae\u5c31\u662f\u8fd8\u6ca1\u505a\u7684\uff08\uff09", None))
+        self.groupBox_2.setToolTip("")
 #endif // QT_CONFIG(tooltip)
         self.groupBox_2.setTitle(QCoreApplication.translate("Form", u"\u64cd\u4f5c", None))
+#if QT_CONFIG(tooltip)
+        self.pushButton_5.setToolTip(QCoreApplication.translate("Form", u"\u5c1a\u672a\u5236\u4f5c\u5b8c\u6210", None))
+#endif // QT_CONFIG(tooltip)
         self.pushButton_5.setText(QCoreApplication.translate("Form", u"\u6807\u6ce8\u2026", None))
         self.copyDatasetButton.setText(QCoreApplication.translate("Form", u"\u590d\u5236\u2026", None))
+#if QT_CONFIG(tooltip)
+        self.pushButton_7.setToolTip(QCoreApplication.translate("Form", u"\u5c1a\u672a\u5236\u4f5c\u5b8c\u6210", None))
+#endif // QT_CONFIG(tooltip)
         self.pushButton_7.setText(QCoreApplication.translate("Form", u"\u5408\u5e76\u2026", None))
         self.divideButton.setText(QCoreApplication.translate("Form", u"\u5212\u5206\u4e3a\u8bad\u7ec3\u4e0e\u9a8c\u8bc1\u2026", None))
-        self.pushButton_9.setText(QCoreApplication.translate("Form", u"\u8f6c\u6362\u4e3a\u2026", None))
+#if QT_CONFIG(tooltip)
+        self.formatButton.setToolTip("")
+#endif // QT_CONFIG(tooltip)
+        self.formatButton.setText(QCoreApplication.translate("Form", u"\u8f6c\u6362\u4e3a\u2026", None))
         self.deleteDatasetButton.setText(QCoreApplication.translate("Form", u"\u5220\u9664\u2026", None))
+#if QT_CONFIG(tooltip)
+        self.pushButton.setToolTip(QCoreApplication.translate("Form", u"\u5c1a\u672a\u5236\u4f5c\u5b8c\u6210", None))
+#endif // QT_CONFIG(tooltip)
         self.pushButton.setText(QCoreApplication.translate("Form", u"\u63d0\u53d6\u90e8\u5206\u5206\u7c7b\u2026", None))
         self.cleanDatasetButton.setText(QCoreApplication.translate("Form", u"\u68c0\u67e5\u5e76\u6e05\u7406\u2026", None))
         self.exportButton.setText(QCoreApplication.translate("Form", u"\u538b\u7f29\u5e76\u5bfc\u51fa\u2026", None))

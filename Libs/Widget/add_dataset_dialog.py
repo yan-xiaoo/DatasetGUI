@@ -72,7 +72,10 @@ class AddDatasetDialog(QDialog, Ui_Dialog):
         if dialog.exec_():
             self.cocoImageEdit.setText(dialog.selectedFiles()[0])
             if not self.cocoName.text():
-                self.cocoName.setText(os.path.basename(dialog.selectedFiles()[0]))
+                if os.path.basename(dialog.selectedFiles()[0]) == 'images':
+                    self.cocoName.setText(os.path.basename(os.path.dirname(dialog.selectedFiles()[0])))
+                else:
+                    self.cocoName.setText(os.path.basename(dialog.selectedFiles()[0]))
 
     @Slot()
     def on_cocoLabelButton_clicked(self):
@@ -89,7 +92,10 @@ class AddDatasetDialog(QDialog, Ui_Dialog):
         if dialog.exec_():
             self.yoloImageEdit.setText(dialog.selectedFiles()[0])
             if not self.yoloName.text():
-                self.yoloName.setText(os.path.basename(dialog.selectedFiles()[0]))
+                if os.path.basename(dialog.selectedFiles()[0]) == 'images':
+                    self.cocoName.setText(os.path.basename(os.path.dirname(dialog.selectedFiles()[0])))
+                else:
+                    self.yoloName.setText(os.path.basename(dialog.selectedFiles()[0]))
 
     @Slot()
     def on_yoloLabelButton_clicked(self):
