@@ -1,5 +1,6 @@
 import json
 import os.path
+import sys
 from abc import ABC, abstractmethod
 import enum
 
@@ -186,11 +187,15 @@ def get_available_id():
 def get_id_by_config(config: DatasetConfig):
     if (config.image_path.startswith("dataset/") or os.path.relpath(config.image_path).startswith("dataset/")) \
             and (config.label_path.startswith("dataset/") or os.path.relpath(config.label_path).startswith("dataset/")):
+        if 'win32' in sys.platform:
+            spliter = '\\'
+        else:
+            spliter = '/'
         try:
-            if int(os.path.relpath(config.image_path).split("/")[1]) == int(os.path.relpath(config.label_path).split("/")[1]):
-                return int(os.path.relpath(config.image_path).split("/")[1])
-            elif int(config.image_path.split("/")[1]) == int(config.label_path.split("/")[1]):
-                return int(config.image_path.split("/")[1])
+            if int(os.path.relpath(config.image_path).split(spliter)[1]) == int(os.path.relpath(config.label_path).split(spliter)[1]):
+                return int(os.path.relpath(config.image_path).split(spliter)[1])
+            elif int(config.image_path.split(spliter)[1]) == int(config.label_path.split(spliter)[1]):
+                return int(config.image_path.split(spliter)[1])
             else:
                 return None
         except ValueError:

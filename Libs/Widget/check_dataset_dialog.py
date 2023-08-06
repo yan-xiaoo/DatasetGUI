@@ -20,13 +20,16 @@ class CheckDatasetDialog(QDialog, Ui_Dialog):
         result1 = result2 = result3 = 0
         if self.labelCheckBox.isChecked():
             result1 = self.check_label()
+            if result1 == 0:
+                QMessageBox.information(self, "检查结果", "数据集中没有冗余的数据")
         if self.imageCheckBox.isChecked():
             result2 = self.check_image()
+            if result2 == 0:
+                QMessageBox.information(self, "检查结果", "数据集中的标签对应的图片文件均存在")
         if self.fileCheckBox.isChecked():
             result3 = self.check_file()
-        if result1 == result2 == result3 == 0:
-            QMessageBox.information(self, "检查完成", "数据集检查完成，没有发现问题")
-            self.accept()
+            if result3 == 0:
+                QMessageBox.information(self, "检查结果", "数据集文件夹下没有多余文件")
 
     def check_label(self):
         if self.config.type_ == 'coco':

@@ -60,7 +60,7 @@ def get_annotation(label_path, name_to_image_id, annotation_id, width, height):
         content = f.readlines()
     for line in content:
         line = line.strip().split()
-        class_id = int(line[0]) + 1
+        class_id = int(float(line[0])) + 1
         x_center = float(line[1])
         y_center = float(line[2])
         bbox_width = float(line[3])

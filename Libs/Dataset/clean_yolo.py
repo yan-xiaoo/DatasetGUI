@@ -83,7 +83,7 @@ class CheckYoloDataset(ProcessFunction):
         for index, label in enumerate(files):
             try:
                 with open(os.path.join(self.yolo_label_directory, label)) as f:
-                    class_ = [int(one.split(' ')[0]) for one in f.readlines()]
+                    class_ = [int(float(one.split(' ')[0])) for one in f.readlines()]
             except (FileNotFoundError, UnicodeDecodeError, ValueError):
                 pass
             else:
