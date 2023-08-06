@@ -1,5 +1,6 @@
 from pycocotools import coco
 import json
+import os
 
 
 def clean_ip(coco_file: coco.COCO):
@@ -67,10 +68,17 @@ def check_coco_detailed(coco_path):
         if len(coco_file.getAnnIds(imgIds=image['id'])) == 0:
             result.append("图片 {} 没有标注".format(image['file_name']))
 
-    number = 0
-    file_name = None
     for category in coco_file.cats.copy().values():
         if len(coco_file.getImgIds(catIds=category['id'])) == 0:
             result.append("类别 {} 没有标注".format(category['name']))
 
+    return result
+
+
+def check_coco_images(coco_image_path, coco_label_path):
+    coco_file = coco.COCO(coco_label_path)
+    result = []
+    for image in coco_file.dataset['images']:
+        if not os.path.exists(os.path.join(coco_image_path, image['file_name'])):
+            result.append("标注过的图片 {} 不存在".format(image['file_name']))
     return result

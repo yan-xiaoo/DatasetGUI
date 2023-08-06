@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
 ################################################################################
-## Form generated from reading UI file 'clean_dataset_dialogMMIKAl.ui'
+## Form generated from reading UI file 'clean_dataset_dialogVaUwhf.ui'
 ##
 ## Created by: Qt User Interface Compiler version 5.15.2
 ##
@@ -32,11 +32,13 @@ class Ui_Dialog(object):
 
         self.imageCheckBox = QCheckBox(self.groupBox)
         self.imageCheckBox.setObjectName(u"imageCheckBox")
+        self.imageCheckBox.setChecked(True)
 
         self.verticalLayout_2.addWidget(self.imageCheckBox)
 
         self.fileCheckBox = QCheckBox(self.groupBox)
         self.fileCheckBox.setObjectName(u"fileCheckBox")
+        self.fileCheckBox.setChecked(True)
 
         self.verticalLayout_2.addWidget(self.fileCheckBox)
 

@@ -41,6 +41,9 @@
         <property name="text">
          <string>检查被标注图片是否存在</string>
         </property>
+        <property name="checked">
+         <bool>true</bool>
+        </property>
        </widget>
       </item>
       <item>
@@ -50,6 +53,9 @@
         </property>
         <property name="text">
          <string>检查数据集内是否有其他文件</string>
+        </property>
+        <property name="checked">
+         <bool>true</bool>
         </property>
        </widget>
       </item>

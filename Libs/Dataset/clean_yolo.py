@@ -79,8 +79,7 @@ class CheckYoloDataset(ProcessFunction):
 
         files = os.listdir(self.yolo_label_directory)
         len_of_files = len(files)
-        self.setMaximum.emit(len_of_files)
-        self.setProgress.emit(0)
+        self.setMaximum.emit(0)
         for index, label in enumerate(files):
             try:
                 with open(os.path.join(self.yolo_label_directory, label)) as f:
@@ -96,9 +95,17 @@ class CheckYoloDataset(ProcessFunction):
             if not classes:
                 self.has_finished.emit()
                 return
-            self.setProgress.emit(index + 1)
             self.setDetailedText.emit("正在检查标注文件 {} {}/{}".format(label, index + 1, len_of_files))
 
         for one_class in classes:
             self.result.append("未找到 classes.txt 中的分类 {}".format(id_to_class_name[one_class]))
         self.has_finished.emit()
+
+
+def check_yolo_images(yolo_image_path, yolo_label_path):
+    result = []
+    searcher = YoloSearch(yolo_image_path)
+    for file in os.listdir(yolo_label_path):
+        if searcher.search(file) is None and file != "classes.txt":
+            result.append("标注文件 {} 没有对应的图片".format(file))
+    return result
