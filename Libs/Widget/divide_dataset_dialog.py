@@ -74,7 +74,7 @@ class DivideDatasetDialog(QDialog, Ui_Dialog):
                 change_log.append(f"dataset/{id_}/val.json")
             change_log.save(id_)
 
-            self.train_config = dataset_config.CocoDataset(self.trainEdit.text(),f"dataset/{id_}/images/train", f"dataset/{id_}/train.json")
+            self.train_config = dataset_config.CocoDataset(self.trainEdit.text(), f"dataset/{id_}/images/train", f"dataset/{id_}/train.json")
             self.val_config = dataset_config.CocoDataset(self.valEdit.text(), f"dataset/{id_}/images/val", f"dataset/{id_}/val.json")
             dataset_config.MergedDatasetConfig(self.train_config, self.val_config)
         else:
@@ -130,4 +130,3 @@ class DivideDatasetDialog(QDialog, Ui_Dialog):
             dataset_config.MergedDatasetConfig(self.train_config, self.val_config)
 
         self.accept()
-

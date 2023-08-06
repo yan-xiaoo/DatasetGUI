@@ -11,14 +11,10 @@ class CopyDir(ProcessFunction):
         self.dst = dst
         self.index = index if index is not None else "temp"
         self.description = description
-        self.change_log = ChangeLog()
+        self.change_log = ChangeLog.load(self.index)
 
     def run(self):
         self.setText.emit(self.description)
-        try:
-            self.change_log = ChangeLog.load(self.index)
-        except FileNotFoundError:
-            pass
         for root, dirs, files in os.walk(self.src):
             maximum = len(files)
             self.setMaximum.emit(maximum)

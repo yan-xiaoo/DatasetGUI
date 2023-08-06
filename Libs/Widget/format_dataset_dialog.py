@@ -4,6 +4,9 @@ from ..Ui.ui_format_dataset_dialog import Ui_Dialog
 from PySide2.QtWidgets import QDialog, QMessageBox
 from .. import dataset_config
 from ..Dataset.yolo_to_coco import yolo_to_coco
+from ..Dataset.coco_to_yolo import LoadCoco
+from ..process_window import ProcessWindow
+from ..work_functions import CopyDir
 from .common_dialog import CommonDialog
 from PySide2.QtCore import Slot
 
@@ -38,9 +41,46 @@ class FormatDatasetDialog(QDialog, Ui_Dialog):
             return
         if self.config.type_ == 'coco':
             if self.mergeBox.checkState():
-                pass
+                id_ = dataset_config.get_available_id()
+                thread = LoadCoco(self.config.parent.train.label_path, f"dataset/{id_}/labels/train", id_,
+                                  "正在生成训练集标签")
+                window = ProcessWindow(thread, self, "正在生成训练集标签")
+                if window.exec_() == window.Rejected:
+                    return
+                thread = CopyDir(self.config.parent.train.image_path, f"dataset/{id_}/images/train", id_,
+                                 "正在拷贝训练集图片")
+                window = ProcessWindow(thread, self, "正在拷贝训练集图片")
+                if window.exec_() == window.Rejected:
+                    return
+                thread = LoadCoco(self.config.parent.val.label_path, f"dataset/{id_}/labels/val", id_,
+                                  "正在生成验证集标签")
+                window = ProcessWindow(thread, self, "正在生成验证集标签")
+                if window.exec_() == window.Rejected:
+                    return
+                thread = CopyDir(self.config.parent.val.image_path, f"dataset/{id_}/images/val", id_,
+                                 "正在拷贝验证集图片")
+                window = ProcessWindow(thread, self, "正在拷贝验证集图片")
+                if window.exec_() == window.Rejected:
+                    return
+                self.new_config = dataset_config.MergedDatasetConfig(
+                    dataset_config.YoloDataset(self.nameEdit.text() + "_训练", f"dataset/{id_}/images/train",
+                                               f"dataset/{id_}/labels/train"),
+                    dataset_config.YoloDataset(self.nameEdit.text() + "_验证", f"dataset/{id_}/images/val",
+                                               f"dataset/{id_}/labels/val"))
+
             else:
-                pass
+                id_ = dataset_config.get_available_id()
+                thread = LoadCoco(self.config.label_path, f"dataset/{id_}/labels", id_)
+                window = ProcessWindow(thread, self, "正在生成数据集标签")
+                if window.exec_() == window.Rejected:
+                    return
+                thread = CopyDir(self.config.image_path, f"dataset/{id_}/images", id_)
+                window = ProcessWindow(thread, self, "正在复制数据集图片")
+                if window.exec_() == window.Rejected:
+                    return
+                self.new_config = dataset_config.YoloDataset(self.nameEdit.text(),
+                                                             f"dataset/{id_}/images", f"dataset/{id_}/labels")
+
         elif self.config.type_ == 'yolo':
             if self.mergeBox.checkState():
                 if not os.path.isfile(os.path.join(self.config.parent.train.label_path, "classes.txt")):
@@ -66,8 +106,10 @@ class FormatDatasetDialog(QDialog, Ui_Dialog):
                                 f"dataset/{id_}/images/val", f"dataset/{id_}/val.json", id_) == 1:
                     return
                 self.new_config = dataset_config.MergedDatasetConfig(
-                    dataset_config.CocoDataset(self.nameEdit.text() + "_训练", f"dataset/{id_}/images/train",f'dataset/{id_}/train.json'),
-                    dataset_config.CocoDataset(self.nameEdit.text() + "_验证", f"dataset/{id_}/images/val", f"dataset/{id_}/val.json")
+                    dataset_config.CocoDataset(self.nameEdit.text() + "_训练", f"dataset/{id_}/images/train",
+                                               f'dataset/{id_}/train.json'),
+                    dataset_config.CocoDataset(self.nameEdit.text() + "_验证", f"dataset/{id_}/images/val",
+                                               f"dataset/{id_}/val.json")
                 )
             else:
                 if not os.path.isfile(os.path.join(self.config.label_path, "classes.txt")):
