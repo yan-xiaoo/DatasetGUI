@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
 ################################################################################
-## Form generated from reading UI file 'dataset_windowRAIDCu.ui'
+## Form generated from reading UI file 'dataset_windowKgDtDl.ui'
 ##
 ## Created by: Qt User Interface Compiler version 5.15.2
 ##
@@ -219,7 +219,7 @@ class Ui_Form(object):
         self.pushButton.setToolTip(QCoreApplication.translate("Form", u"\u5c1a\u672a\u5236\u4f5c\u5b8c\u6210", None))
 #endif // QT_CONFIG(tooltip)
         self.pushButton.setText(QCoreApplication.translate("Form", u"\u63d0\u53d6\u90e8\u5206\u5206\u7c7b\u2026", None))
-        self.cleanDatasetButton.setText(QCoreApplication.translate("Form", u"\u68c0\u67e5\u5e76\u6e05\u7406\u2026", None))
+        self.cleanDatasetButton.setText(QCoreApplication.translate("Form", u"\u68c0\u67e5\u2026", None))
         self.exportButton.setText(QCoreApplication.translate("Form", u"\u538b\u7f29\u5e76\u5bfc\u51fa\u2026", None))
     # retranslateUi
 

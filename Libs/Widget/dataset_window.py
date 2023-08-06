@@ -3,7 +3,7 @@ import os.path
 from ..Ui.ui_dataset_window import Ui_Form
 from .common_dialog import CommonDialog
 from .delete_dataset_dialog import DeleteDatasetDialog
-from ..Dataset import clean_coco
+from .check_dataset_dialog import CheckDatasetDialog
 from .. import dataset_config
 from .copy_dataset_dialog import CopyDatasetDialog
 from .archive_dataset_dialog import ArchiveDatasetDialog
@@ -36,10 +36,6 @@ class DatasetWindow(QWidget, Ui_Form):
             self.dataTypeLabel.setText(f"{config.type_} 格式的验证集")
         else:
             self.dataTypeLabel.setText(f"{config.type_} 格式的数据集")
-        if config.type_ != 'coco':
-            self.cleanDatasetButton.setVisible(False)
-        else:
-            self.cleanDatasetButton.setVisible(True)
         if config.data_type in (dataset_config.DataType.TRAIN, dataset_config.DataType.VAL):
             self.divideButton.setEnabled(False)
             self.divideButton.setToolTip("该数据集已经是训练/验证集，无法再划分")
@@ -132,17 +128,8 @@ class DatasetWindow(QWidget, Ui_Form):
 
     @Slot()
     def on_cleanDatasetButton_clicked(self):
-        result = clean_coco.check_coco(self.config.label_path)
-        if result:
-            dialog = CommonDialog(self, "清理数据集", "数据集中存在如下问题",
-                                  "\n".join(result) + "\n是否要清理数据集？",
-                                  ("清理", "返回"))
-            if dialog.exec_() == dialog.Rejected:
-                return
-            else:
-                clean_coco.clean(self.config.label_path)
-        else:
-            QMessageBox.information(self, "提示", "数据集中没有任何问题，不需要清理")
+        dialog = CheckDatasetDialog(self.config, self)
+        dialog.exec_()
 
     @Slot()
     def on_copyDatasetButton_clicked(self):

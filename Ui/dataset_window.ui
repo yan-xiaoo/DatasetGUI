@@ -214,7 +214,7 @@
          <bool>true</bool>
         </property>
         <property name="text">
-         <string>检查并清理…</string>
+         <string>检查…</string>
         </property>
        </widget>
       </item>
