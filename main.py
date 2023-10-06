@@ -4,7 +4,7 @@ import os
 
 
 if __name__ == "__main__":
-    os.chdir(os.getcwd())
+    os.chdir(os.path.dirname(__file__))
     app = QApplication()
     window = MainWindow()
     window.show()

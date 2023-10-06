@@ -1,5 +1,5 @@
 from .process_window import ProcessFunction
-from .changelog import ChangeLog
+from .changelog import ChangeLog, delete_changelog
 import os
 import shutil
 
@@ -26,7 +26,7 @@ class CopyDir(ProcessFunction):
                 if os.path.exists(dst_file):
                     continue
                 self.setDetailedText.emit(f"正在复制 {dst_file} {i}/{maximum}")
-                print("Copying file from", src_file, "to", dst_file)
+                # print("Copying file from", src_file, "to", dst_file)
                 self.copyfile(src_file, dst_file)
                 self.setProgress.emit(i)
 
@@ -88,7 +88,7 @@ class ClearDir(ProcessFunction):
                 except OSError:
                     print(f"Failed to remove {f}, it is not empty")
             self.setDetailedText.emit(f"正在删除 {os.path.relpath(f, 'dataset')} {i}/{len(log)}")
-        os.remove(f"dataset/changelog/{self.index}.txt")
+        delete_changelog(self.index)
         self.has_finished.emit()
         return
 

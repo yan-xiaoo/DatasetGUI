@@ -1,9 +1,9 @@
-from pycocotools import coco
+from .coco_utils import COCO
 import json
 import os
 
 
-def clean_ip(coco_file: coco.COCO):
+def clean_ip(coco_file: COCO):
     for image in coco_file.imgs.copy().values():
         if len(coco_file.getAnnIds(imgIds=image['id'])) == 0:
             coco_file.dataset['images'].remove(image)
@@ -17,14 +17,14 @@ def clean_ip(coco_file: coco.COCO):
 
 
 def clean(coco_path):
-    coco_file = coco.COCO(coco_path)
+    coco_file = COCO(coco_path)
     clean_ip(coco_file)
     with open(coco_path, 'w') as f:
         json.dump(coco_file.dataset, f, indent=4, ensure_ascii=False)
 
 
 def check_coco(coco_path):
-    coco_file = coco.COCO(coco_path)
+    coco_file = COCO(coco_path)
     result = []
     if "images" not in coco_file.dataset:
         result.append("数据集中不包含图片信息")
@@ -56,7 +56,7 @@ def check_coco(coco_path):
 
 
 def check_coco_detailed(coco_path):
-    coco_file = coco.COCO(coco_path)
+    coco_file = COCO(coco_path)
     result = []
     if "images" not in coco_file.dataset:
         result.append("数据集中不包含图片信息")
@@ -76,7 +76,7 @@ def check_coco_detailed(coco_path):
 
 
 def check_coco_images(coco_image_path, coco_label_path):
-    coco_file = coco.COCO(coco_label_path)
+    coco_file = COCO(coco_label_path)
     result = []
     for image in coco_file.dataset['images']:
         if not os.path.exists(os.path.join(coco_image_path, image['file_name'])):

@@ -1,4 +1,4 @@
-from pycocotools.coco import COCO
+from .coco_utils import COCO
 import os
 from ..changelog import ChangeLog
 from ..process_window import ProcessFunction
@@ -95,9 +95,9 @@ class LoadCoco(ProcessFunction):
                 h = bbox[3]
 
                 segmentation = []
-                for index in range(0, len(ann['segmentation'][0]), 2):
+                for index_internal in range(0, len(ann['segmentation'][0]), 2):
                     segmentation.append(
-                        [float(ann['segmentation'][0][index]), float(ann['segmentation'][0][index + 1])])
+                        [float(ann['segmentation'][0][index_internal]), float(ann['segmentation'][0][index_internal + 1])])
 
                 obj = [ann['category_id'] - min_category, xc, yc, w, h]
                 obj.extend(segmentation)
@@ -109,7 +109,7 @@ class LoadCoco(ProcessFunction):
 
             self.setProgress.emit(index + 1)
             self.setDetailedText.emit(f"正在生成 {os.path.join(self.xml_save_path, info['filename'][:-3] + 'txt')} {index + 1}/{len(imgIds)}")
-        self.change_log.save(id_)
+        self.change_log.save(self.id_)
         self.has_finished.emit()
 
     def makedirs(self, directory):

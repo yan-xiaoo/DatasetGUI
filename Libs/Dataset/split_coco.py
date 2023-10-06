@@ -1,4 +1,4 @@
-from pycocotools import coco
+from .coco_utils import COCO
 import random
 
 
@@ -11,9 +11,9 @@ def copy_basic_info(src, dst):
 
 
 def category_split(annotation_file: str, rate_of_train: float, rate_of_val: float):
-    annotation = coco.COCO(annotation_file)
-    train_file = coco.COCO()
-    val_file = coco.COCO()
+    annotation = COCO(annotation_file)
+    train_file = COCO()
+    val_file = COCO()
 
     copy_basic_info(annotation, train_file)
     copy_basic_info(annotation, val_file)
