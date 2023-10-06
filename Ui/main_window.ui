@@ -96,7 +96,6 @@
     <property name="title">
      <string>文件</string>
     </property>
-    <addaction name="action_new_dataset"/>
     <addaction name="action_add_dataset"/>
    </widget>
    <addaction name="menu"/>

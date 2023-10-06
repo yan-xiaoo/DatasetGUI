@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
 ################################################################################
-## Form generated from reading UI file 'dataset_windowKgDtDl.ui'
+## Form generated from reading UI file 'dataset_windowrYabtt.ui'
 ##
 ## Created by: Qt User Interface Compiler version 5.15.2
 ##
@@ -110,11 +110,11 @@ class Ui_Form(object):
 
         self.gridLayout_2.addWidget(self.copyDatasetButton, 0, 1, 1, 1)
 
-        self.pushButton_7 = QPushButton(self.groupBox_2)
-        self.pushButton_7.setObjectName(u"pushButton_7")
-        self.pushButton_7.setEnabled(False)
+        self.mergeButton = QPushButton(self.groupBox_2)
+        self.mergeButton.setObjectName(u"mergeButton")
+        self.mergeButton.setEnabled(False)
 
-        self.gridLayout_2.addWidget(self.pushButton_7, 0, 2, 1, 1)
+        self.gridLayout_2.addWidget(self.mergeButton, 0, 2, 1, 1)
 
         self.divideButton = QPushButton(self.groupBox_2)
         self.divideButton.setObjectName(u"divideButton")
@@ -163,8 +163,8 @@ class Ui_Form(object):
         QWidget.setTabOrder(self.showLabelPathButton, self.update_info)
         QWidget.setTabOrder(self.update_info, self.pushButton_5)
         QWidget.setTabOrder(self.pushButton_5, self.copyDatasetButton)
-        QWidget.setTabOrder(self.copyDatasetButton, self.pushButton_7)
-        QWidget.setTabOrder(self.pushButton_7, self.pushButton)
+        QWidget.setTabOrder(self.copyDatasetButton, self.mergeButton)
+        QWidget.setTabOrder(self.mergeButton, self.pushButton)
         QWidget.setTabOrder(self.pushButton, self.divideButton)
         QWidget.setTabOrder(self.divideButton, self.formatButton)
         QWidget.setTabOrder(self.formatButton, self.deleteDatasetButton)
@@ -206,9 +206,9 @@ class Ui_Form(object):
         self.pushButton_5.setText(QCoreApplication.translate("Form", u"\u6807\u6ce8\u2026", None))
         self.copyDatasetButton.setText(QCoreApplication.translate("Form", u"\u590d\u5236\u2026", None))
 #if QT_CONFIG(tooltip)
-        self.pushButton_7.setToolTip(QCoreApplication.translate("Form", u"\u5c1a\u672a\u5236\u4f5c\u5b8c\u6210", None))
+        self.mergeButton.setToolTip(QCoreApplication.translate("Form", u"\u5c1a\u672a\u5236\u4f5c\u5b8c\u6210", None))
 #endif // QT_CONFIG(tooltip)
-        self.pushButton_7.setText(QCoreApplication.translate("Form", u"\u5408\u5e76\u2026", None))
+        self.mergeButton.setText(QCoreApplication.translate("Form", u"\u5408\u5e76\u2026", None))
         self.divideButton.setText(QCoreApplication.translate("Form", u"\u5212\u5206\u4e3a\u8bad\u7ec3\u4e0e\u9a8c\u8bc1\u2026", None))
 #if QT_CONFIG(tooltip)
         self.formatButton.setToolTip("")

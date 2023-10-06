@@ -64,12 +64,12 @@ class DatasetWindow(QWidget, Ui_Form):
     @Slot()
     def on_showImagePathButton_clicked(self):
         service = QDesktopServices()
-        service.openUrl(QUrl.fromLocalFile(self.imagePathEdit.text()))
+        service.openUrl(QUrl.fromLocalFile(os.path.abspath(self.imagePathEdit.text())))
 
     @Slot()
     def on_showLabelPathButton_clicked(self):
         service = QDesktopServices()
-        service.openUrl(QUrl.fromLocalFile(self.labelPathEdit.text()))
+        service.openUrl(QUrl.fromLocalFile(os.path.abspath(self.labelPathEdit.text())))
 
     @Slot()
     def on_update_info_clicked(self):

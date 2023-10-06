@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
 ################################################################################
-## Form generated from reading UI file 'main_windowmOGQAX.ui'
+## Form generated from reading UI file 'main_windowCWCvRc.ui'
 ##
 ## Created by: Qt User Interface Compiler version 5.15.2
 ##
@@ -75,7 +75,6 @@ class Ui_MainWindow(object):
         MainWindow.setStatusBar(self.statusbar)
 
         self.menubar.addAction(self.menu.menuAction())
-        self.menu.addAction(self.action_new_dataset)
         self.menu.addAction(self.action_add_dataset)
 
         self.retranslateUi(MainWindow)

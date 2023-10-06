@@ -15,7 +15,7 @@ class DeleteProblemDialog(QDialog, Ui_Dialog):
     @Slot()
     def on_imageButton_clicked(self):
         service = QDesktopServices()
-        service.openUrl(QUrl.fromLocalFile(self.config.image_path))
+        service.openUrl(QUrl.fromLocalFile(os.path.abspath(self.config.image_path)))
 
     @Slot()
     def on_labelButton_clicked(self):
@@ -24,7 +24,7 @@ class DeleteProblemDialog(QDialog, Ui_Dialog):
             QMessageBox.information(self, "提示", "您的标签文件是该文件夹下的 {}".format(os.path.basename(self.config.label_path)))
             service.openUrl(QUrl.fromLocalFile(os.path.dirname(self.config.label_path)))
         elif self.config.type_ == 'yolo':
-            service.openUrl(QUrl.fromLocalFile(self.config.label_path))
+            service.openUrl(QUrl.fromLocalFile(os.path.abspath(self.config.label_path)))
 
     @Slot()
     def on_whyButton_clicked(self):
