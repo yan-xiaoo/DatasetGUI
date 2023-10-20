@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>398</width>
-    <height>225</height>
+    <height>246</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -56,6 +56,19 @@
         </property>
         <property name="checked">
          <bool>true</bool>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QCheckBox" name="pointCheckBox">
+        <property name="toolTip">
+         <string>检查数据集的每个分类的关键点数量是否正确</string>
+        </property>
+        <property name="text">
+         <string>检查各分类关键点的个数</string>
+        </property>
+        <property name="checked">
+         <bool>false</bool>
         </property>
        </widget>
       </item>

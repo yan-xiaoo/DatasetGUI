@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
 ################################################################################
-## Form generated from reading UI file 'clean_dataset_dialogVaUwhf.ui'
+## Form generated from reading UI file 'clean_dataset_dialogdEmdTg.ui'
 ##
 ## Created by: Qt User Interface Compiler version 5.15.2
 ##
@@ -17,7 +17,7 @@ class Ui_Dialog(object):
     def setupUi(self, Dialog):
         if not Dialog.objectName():
             Dialog.setObjectName(u"Dialog")
-        Dialog.resize(398, 225)
+        Dialog.resize(398, 246)
         self.verticalLayout = QVBoxLayout(Dialog)
         self.verticalLayout.setObjectName(u"verticalLayout")
         self.groupBox = QGroupBox(Dialog)
@@ -41,6 +41,12 @@ class Ui_Dialog(object):
         self.fileCheckBox.setChecked(True)
 
         self.verticalLayout_2.addWidget(self.fileCheckBox)
+
+        self.pointCheckBox = QCheckBox(self.groupBox)
+        self.pointCheckBox.setObjectName(u"pointCheckBox")
+        self.pointCheckBox.setChecked(False)
+
+        self.verticalLayout_2.addWidget(self.pointCheckBox)
 
 
         self.verticalLayout.addWidget(self.groupBox)
@@ -91,6 +97,10 @@ class Ui_Dialog(object):
         self.fileCheckBox.setToolTip(QCoreApplication.translate("Dialog", u"\u68c0\u67e5\u6570\u636e\u96c6\u6587\u4ef6\u5939\u5185\u662f\u5426\u6709\u56fe\u7247\u548c\u6807\u7b7e\u5916\u7684\u5176\u4ed6\u6587\u4ef6", None))
 #endif // QT_CONFIG(tooltip)
         self.fileCheckBox.setText(QCoreApplication.translate("Dialog", u"\u68c0\u67e5\u6570\u636e\u96c6\u5185\u662f\u5426\u6709\u5176\u4ed6\u6587\u4ef6", None))
+#if QT_CONFIG(tooltip)
+        self.pointCheckBox.setToolTip(QCoreApplication.translate("Dialog", u"\u68c0\u67e5\u6570\u636e\u96c6\u7684\u6bcf\u4e2a\u5206\u7c7b\u7684\u5173\u952e\u70b9\u6570\u91cf\u662f\u5426\u6b63\u786e", None))
+#endif // QT_CONFIG(tooltip)
+        self.pointCheckBox.setText(QCoreApplication.translate("Dialog", u"\u68c0\u67e5\u5404\u5206\u7c7b\u5173\u952e\u70b9\u7684\u4e2a\u6570", None))
         self.label.setText(QCoreApplication.translate("Dialog", u"\u5728\u68c0\u67e5\u975e\u5e38\u975e\u5e38\u5927\u7684\u6570\u636e\u96c6\u65f6\uff0c\n"
 "\u7a0b\u5e8f\u53ef\u80fd\u5728\u77ed\u65f6\u95f4\u5185\u65e0\u54cd\u5e94\u3002\u8fd9\u662f\u6b63\u5e38\u73b0\u8c61", None))
         self.okButton.setText(QCoreApplication.translate("Dialog", u"\u68c0\u67e5", None))

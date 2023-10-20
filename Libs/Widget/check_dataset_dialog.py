@@ -3,6 +3,7 @@ from ..Ui.ui_clean_dataset_dialog import Ui_Dialog
 from PySide2.QtWidgets import QDialog, QMessageBox
 from PySide2.QtCore import Slot
 from .check_result_dialog import CheckResultDialog
+from .keypoint_number_dialog import KeypointNumberDialog
 from ..Dataset import clean_coco, clean_yolo
 from .. import dataset_config
 from filetype import is_image
@@ -17,7 +18,6 @@ class CheckDatasetDialog(QDialog, Ui_Dialog):
 
     @Slot()
     def on_okButton_clicked(self):
-        result1 = result2 = result3 = 0
         if self.labelCheckBox.isChecked():
             result1 = self.check_label()
             if result1 == 0:
@@ -30,6 +30,10 @@ class CheckDatasetDialog(QDialog, Ui_Dialog):
             result3 = self.check_file()
             if result3 == 0:
                 QMessageBox.information(self, "检查结果", "数据集文件夹下没有多余文件")
+        if self.pointCheckBox.isChecked():
+            result4 = self.check_keypoints()
+            if result4 == 0:
+                QMessageBox.information(self, "检查结果", "数据集中的所有关键点数量均正确")
 
     def check_label(self):
         if self.config.type_ == 'coco':
@@ -97,6 +101,16 @@ class CheckDatasetDialog(QDialog, Ui_Dialog):
                 dialog = CheckResultDialog(result, parent=self)
                 dialog.exec_()
                 return 1
+            return 0
+
+    def check_keypoints(self):
+        dialog = KeypointNumberDialog(self.config, self)
+        if dialog.exec_() == dialog.Rejected:
+            return 1
+        elif dialog.result:
+            CheckResultDialog([i.get_wrong_message() for i in dialog.result], parent=self).exec_()
+            return 1
+        else:
             return 0
 
 
