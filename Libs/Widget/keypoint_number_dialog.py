@@ -70,7 +70,12 @@ class KeypointNumberDialog(QDialog, Ui_dialog):
                     break
 
         if self.dataset.type_ == 'coco':
-            class_keypoint = {i+1: j for i, j in self.class_keypoint.items()}
+            coco = COCO(self.dataset.label_path)
+            coco_categories = [i['id'] for i in coco.dataset['categories']]
+            if 0 in coco_categories or '0' in coco_categories:
+                class_keypoint = {i: j for i, j in self.class_keypoint.items()}
+            else:
+                class_keypoint = {i + 1: j for i, j in self.class_keypoint.items()}
             self.result = get_coco_keypoints(self.dataset.label_path, class_keypoint)
         elif self.dataset.type_ == 'yolo':
             class_keypoint = {i: j for i, j in self.class_keypoint.items()}

@@ -33,7 +33,7 @@ def category_split(annotation_file: str, rate_of_train: float, rate_of_val: floa
             category_images.remove(image_id)
             img = annotation.loadImgs(image_id)[0]
             train_file.imgs[image_id] = img
-            anns = annotation.loadAnns(annotation.getAnnIds(imgIds=image_id))[0]
+            anns = annotation.loadAnns(annotation.getAnnIds(imgIds=image_id))
             train_file.anns[image_id] = anns
 
         for _ in range(num_of_val):
@@ -41,13 +41,19 @@ def category_split(annotation_file: str, rate_of_train: float, rate_of_val: floa
             category_images.remove(image_id)
             img = annotation.loadImgs(image_id)[0]
             val_file.imgs[image_id] = img
-            anns = annotation.loadAnns(annotation.getAnnIds(imgIds=image_id))[0]
+            anns = annotation.loadAnns(annotation.getAnnIds(imgIds=image_id))
             val_file.anns[image_id] = anns
 
     train_file.dataset["images"] = list(train_file.imgs.values())
-    train_file.dataset["annotations"] = list(train_file.anns.values())
+    anns = []
+    for img_id in train_file.imgs.keys():
+        anns.extend(train_file.anns[img_id])
+    train_file.dataset["annotations"] = anns
 
     val_file.dataset["images"] = list(val_file.imgs.values())
-    val_file.dataset["annotations"] = list(val_file.anns.values())
+    anns = []
+    for img_id in train_file.imgs.keys():
+        anns.extend(train_file.anns[img_id])
+    val_file.dataset["annotations"] = anns
 
     return train_file, val_file
